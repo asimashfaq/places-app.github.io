@@ -12,7 +12,7 @@ function App() {
     <>
       <div className="bg-app w-100">
         <div className="h-screen flex flex-col">
-          <div className="w-full border-b py-2 border-gray-300 bg-blue-800 text-white">
+          <div className="w-full py-2 bg-blue-800 text-white">
             <Container className="mx-auto">
               <Header />          
             </Container>

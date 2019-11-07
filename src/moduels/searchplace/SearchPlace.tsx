@@ -44,7 +44,7 @@ const PlaceSearch: React.FC = () => {
         <input
           type="text"
           placeholder="ex. location"
-          className="search-input border border-gray-300 px-2 py-1 text-gray-700 text-sm w-full rounded-sm"
+          className="search-input border border-gray-300 px-2 py-1 text-gray-700 text-sm w-full rounded-sm focus:border-gray-900"
           ref={inputRef}
           value={value}
           onChange={onChangeHandler}

@@ -26,13 +26,14 @@ const VenuePhoto = ({venue} : {venue: Venue}) => {
   }, [query, dispatch]);
 
   return (
-    <div className="recipe-item p-2 d-flex align-items-start justify-content-start flex-column flex-lg-row flex">
-          <div className="w-3/5">
-            <h1 className="font-bold text-sm">{venue.name}</h1>
-            <p className="text-xs">{venue.location.formattedAddress} min</p>
+    <div className="recipe-item px-4 py-3 d-flex align-items-start justify-content-start flex-column flex-lg-row flex justify-between
+    border-b border-dark-700 cursor-pointer bg-white hover:bg-gray-100 h-auto items-center md:h-24 ">
+          <div className="flex-1">
+            <h1 className="text-ms text-blue-800">{venue.name}</h1>
+            <p className="text-sm mt-1 text-blue-900 italic">{venue.location.formattedAddress} min</p>
           </div>
-          <div className="ml-2 w-2/5">
-            <img src="data" ></img>
+          <div className="ml-2 w-16 h-12">
+            <img src="data"></img>
           </div>
       </div>
   );
@@ -40,3 +41,4 @@ const VenuePhoto = ({venue} : {venue: Venue}) => {
 
 export { VenuePhoto };
 export default VenuePhoto;
+
