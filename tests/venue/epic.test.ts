@@ -1,7 +1,10 @@
 import { ActionsObservable } from "redux-observable";
-import { photos } from "../../services/data";
-import { VENUE_PHOTOS_FAIL, VENUE_PHOTOS_SUCCESS } from "./constants";
-import { venuePhotoEpic } from "./epics";
+import {
+  VENUE_PHOTOS_FAIL,
+  VENUE_PHOTOS_SUCCESS
+} from "../../src/moduels/venue/constants";
+import { venuePhotoEpic } from "../../src/moduels/venue/epics";
+import { photos } from "../../src/services/data";
 describe("venue epic", () => {
   it("shoud return VENUE_PHOTOS_SUCCESS", async () => {
     const VenueId = "557c3971498ec5857dd9bdf4";

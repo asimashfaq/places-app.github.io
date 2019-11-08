@@ -2,9 +2,9 @@ import {
   VENUE_PHOTOS,
   VENUE_PHOTOS_FAIL,
   VENUE_PHOTOS_SUCCESS
-} from "./constants";
-import reducer, { initialState } from "./reducer";
-import { VenueAction, VenuePhotos } from "./types";
+} from "../../src/moduels/venue/constants";
+import reducer, { initialState } from "../../src/moduels/venue/reducer";
+import { VenueAction, VenuePhotos } from "../../src/moduels/venue/types";
 describe("venue reducer", () => {
   it("should return the initial state", () => {
     expect(reducer(undefined, {} as VenueAction)).toEqual({
