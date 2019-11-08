@@ -4,7 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { searchEpic } from "./moduels/places/epics";
 import datalistReducer from "./moduels/places/reducer";
-import { venuePicEpic } from "./moduels/venue/epics";
+import { venuePhotoEpic } from "./moduels/venue/epics";
 import venuePicReducer from "./moduels/venue/reducer";
 
 const rootReducer = combineReducers({
@@ -24,8 +24,7 @@ if (process.env.NODE_ENV === "development") {
 
 const persistConfig = {
   key: "root",
-  storage,
-  whitelist: ["likes"]
+  storage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -33,7 +32,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer, compose(...middlewares));
 const persistor = persistStore(store);
 
-const rootEpic = combineEpics(searchEpic, venuePicEpic);
+const rootEpic = combineEpics(searchEpic, venuePhotoEpic);
 epicMiddleware.run(rootEpic);
 
 export { store, persistor };

@@ -6,7 +6,7 @@ import Venue from "../venue/Venue";
 import { search } from "./action";
 import { useSearchContext } from "../../context/SearchContext";
 import GoogleMapReact, { ChangeEventValue } from 'google-map-react';
-import './PlacesList.scss';
+import './Places.scss';
 import * as config from "../../config";
 const gprops = {
   center: {

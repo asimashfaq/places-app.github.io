@@ -2,7 +2,7 @@ import React from "react";
 import { Venue as IVenue } from "../places/types";
 import { useSearchContext } from "../../context/SearchContext";
 import { useDispatch, useSelector } from "../../hooks/react-redux";
-import { venuePic } from "./action";
+import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
 
 const Venue = ({venue} : {venue: IVenue}) => {
@@ -22,7 +22,7 @@ const Venue = ({venue} : {venue: IVenue}) => {
 
   React.useEffect(() => {
     if (query.length < 1) return;
-    dispatch(venuePic(venue.id));
+    dispatch(venuePhotosLoad(venue.id));
   }, [venue.id, dispatch]);
 
   return (

@@ -6,24 +6,25 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
 import { catchError, map, mergeMap } from "rxjs/operators";
 import * as api from "../../services/api";
-import { venuepicFail, venuepicSuccess } from "./action";
-import { IVenuePicAction } from "./types";
-export const venuePicEpic = (action$: any) =>
+import { venuePhotosFail, venuePhotosSuccess } from "./action";
+import { VenuePhotoLoadAction } from "./types";
+export const venuePhotoEpic = (action$: any) =>
   action$.pipe(
-    ofType("VENUE_PIC"),
-    mergeMap((action: IVenuePicAction) =>
+    ofType("VENUE_PHOTOS"),
+    mergeMap((action: VenuePhotoLoadAction) =>
       from(api.getvenuePicResults(action.queryId, true)).pipe(
         map((response: any, err: any) =>
-          venuepicSuccess(response.data, action.queryId)
+          venuePhotosSuccess(response.data, action.queryId)
         ),
         //tap(item => console.log(item)),
         catchError(error => {
           if (error.needFakeData) {
             return from(api.getvenuePicResults(action.queryId, true)).map(
-              (response: any) => venuepicSuccess(response.data, action.queryId)
+              (response: any) =>
+                venuePhotosSuccess(response.data, action.queryId)
             );
           } else {
-            return Observable.of(venuepicFail(error));
+            return Observable.of(venuePhotosFail(error));
           }
         })
       )

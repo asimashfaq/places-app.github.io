@@ -1,5 +1,5 @@
 import React from "react";
-import PlaceSearch from "../../moduels/searchplace/SearchPlace";
+import PlaceSearch from "../../moduels/searchvenue/SearchPlace";
 import { Link } from "react-router-dom";
 const Header:React.FC = () => {
   return (

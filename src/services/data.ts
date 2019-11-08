@@ -1,7 +1,7 @@
 import { IObject } from "../moduels/places/types";
-import { vPhotoObject } from "../moduels/venue/types";
+import { VenuePhotos } from "../moduels/venue/types";
 interface venuePhotos {
-  [key: string]: vPhotoObject;
+  [key: string]: VenuePhotos;
 }
 const locations: IObject = {
   meta: {

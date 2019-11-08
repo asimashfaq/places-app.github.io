@@ -1,27 +1,32 @@
 import {
-  IVenuePicAction,
-  IVenuePicFailAction,
-  IVenuePicSuccessAction,
-  vPhotoObject
+  VENUE_PHOTOS,
+  VENUE_PHOTOS_FAIL,
+  VENUE_PHOTOS_SUCCESS
+} from "./constants";
+import {
+  VenuePhotoLoadAction,
+  VenuePhotos,
+  VenuePhotosFailAction,
+  VenuePhotosSuccessAction
 } from "./types";
 
-export const venuePic = (queryId: string): IVenuePicAction => ({
-  type: "VENUE_PIC",
+export const venuePhotosLoad = (queryId: string): VenuePhotoLoadAction => ({
+  type: VENUE_PHOTOS,
   queryId
 });
 
-export const venuepicSuccess = (
-  data: vPhotoObject,
+export const venuePhotosSuccess = (
+  data: VenuePhotos,
   id: string
-): IVenuePicSuccessAction => ({
-  type: "VENUE_PIC_SUCCESS",
+): VenuePhotosSuccessAction => ({
+  type: VENUE_PHOTOS_SUCCESS,
   data,
   id
 });
 
-export const venuepicFail = (error: {
+export const venuePhotosFail = (error: {
   message: string;
-}): IVenuePicFailAction => ({
-  type: "VENUE_PIC_FAIL",
+}): VenuePhotosFailAction => ({
+  type: VENUE_PHOTOS_FAIL,
   error
 });

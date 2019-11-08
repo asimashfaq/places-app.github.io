@@ -1,5 +1,9 @@
 import { Action } from "redux";
-
+import {
+  VENUE_PHOTOS,
+  VENUE_PHOTOS_FAIL,
+  VENUE_PHOTOS_SUCCESS
+} from "./constants";
 export interface Meta {
   code: number;
   requestId: string;
@@ -54,31 +58,33 @@ export interface Response {
   photos: Photos;
 }
 
-export interface vPhotoObject {
+export interface VenuePhotos {
   meta: Meta;
   response: Response;
 }
 
-export interface IVenuePicAction extends Action<"VENUE_PIC"> {
+export interface VenuePhotoLoadAction extends Action<typeof VENUE_PHOTOS> {
   queryId: string;
 }
 
-export interface IVenuePicSuccessAction extends Action<"VENUE_PIC_SUCCESS"> {
-  data: vPhotoObject;
+export interface VenuePhotosSuccessAction
+  extends Action<typeof VENUE_PHOTOS_SUCCESS> {
+  data: VenuePhotos;
   id: string;
 }
 
-export interface IVenuePicFailAction extends Action<"VENUE_PIC_FAIL"> {
+export interface VenuePhotosFailAction
+  extends Action<typeof VENUE_PHOTOS_FAIL> {
   error: { message: string };
 }
 
-export type TAction =
-  | IVenuePicAction
-  | IVenuePicSuccessAction
-  | IVenuePicFailAction;
+export type VenueAction =
+  | VenuePhotoLoadAction
+  | VenuePhotosSuccessAction
+  | VenuePhotosFailAction;
 
 export interface IVenueState {
   isLoading?: boolean;
   error?: { message: string } | null;
-  photos?: { [key: string]: vPhotoObject };
+  photos?: { [key: string]: VenuePhotos };
 }
