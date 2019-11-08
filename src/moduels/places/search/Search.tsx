@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { SearchContext } from "../../context/SearchContext";
+import { SearchContext } from "../../../context/SearchContext";
 const PlaceSearch: React.FC = () => {
   const [value, setValue] = useState("Park");
   const [showError, setShowError] = useState(false);
