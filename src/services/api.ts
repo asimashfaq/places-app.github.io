@@ -17,7 +17,7 @@ export const getSearchResults = (
   if (useFakeData || window.localStorage.getItem("use_fake_data")) {
     alwaysUseFakeNow();
     return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.locations }), 300);
+      setTimeout(() => resolve({ data: fakeData.locations }), 3000);
     });
   } else {
     return axios.get("/venues/explore", {

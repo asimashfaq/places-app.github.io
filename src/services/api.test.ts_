@@ -6,6 +6,6 @@ describe("api test", () => {
       type: "VENUE_PHOTOS",
       queryId: "1"
     });
-    //venuePhotoEpic(action$);
+    venuePhotoEpic(action$);
   });
 });

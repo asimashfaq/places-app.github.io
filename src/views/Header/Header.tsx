@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const Header:React.FC = () => {
   return (
     <>
-      <header className="flex px-4 py-3 justify-between items-center ">
-        <Link className="font-semibold text-xl" to="">Places App</Link>
+     <header className="flex px-2 py-3 justify-between items-center sm:px-4">
+        <Link className="font-semibold text-lg sm:text-xl" to="">Places App</Link>
         <Search/>
-        <button className="bg-blue-500 py-1 px-3 text-white rounded-sm hover:bg-white hover:text-blue-500">Search</button>
+        <button className="bg-primary py-1 px-2 text-white rounded-sm hover:bg-white hover:text-blue-500 sm:px-3">Search</button>
       </header>
     </>
   );

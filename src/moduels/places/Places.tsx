@@ -30,6 +30,8 @@ const PlacesList: React.FC = () => {
  const { query } = useSearchContext();
  const [lat , setLat] = useState(gprops.center.lat)
  const [lng , setLng] = useState(gprops.center.lng)
+ const [loader, setLoader] = useState(false);
+
  const [markers] = useState([] as MapLocation[])
   const dispatch = useDispatch();
 
@@ -54,8 +56,16 @@ const PlacesList: React.FC = () => {
     
     if (query.length < 1) return;
     dispatch(search(query,lat,lng));
+    setLoader(true);
+    setTimeout(() => {
+     // setLoader(false);
+  },300);
   }, [query,lat,lng, dispatch]);
 
+  React.useEffect(()=>{
+    if(!isLoading)
+      setLoader(false)
+  },[data.response, isLoading])
   let result = null;
 
   if (isLoading) {
@@ -65,6 +75,7 @@ const PlacesList: React.FC = () => {
   } else if (data && data.meta.code === 200) {
    
     if(data.response.groups[0].items.length>0 ){
+     
       result = data.response.groups[0].items.map((item:Item) => {
         markers.push({Lat:item.venue.location.lat,Lng:item.venue.location.lng})
         // console.log(markers)
@@ -77,24 +88,42 @@ const PlacesList: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-1"> 
-      <div className="gMap w-2/3 h-full">
-      <GoogleMapReact
-            bootstrapURLKeys={{ key: "AIzaSyCGfO7rXQBR5j7EKJBafS3soCPpLhqW-J0" }}
-            onChange = {onBoundsChange}
-            defaultCenter={gprops.center}
-            defaultZoom={gprops.zoom}
-          >
-            {
-              markers.map((m:MapLocation, index:number) =>{
-                return <Marker key={index} lat={m.Lat} lng={m.Lng}/>
-              })
-            }
-          </GoogleMapReact>
-          
-      </div>
-      <div className="w-1/3">{result}</div>
-    </div>
+    <div className="flex flex-col flex-1 lg:flex-row bg-secondary">
+            <div className="gMap w-full h-64 lg:w-2/3 lg:h-full full">
+                <GoogleMapReact
+                    bootstrapURLKeys={{key: "AIzaSyCGfO7rXQBR5j7EKJBafS3soCPpLhqW-J0"}}
+                    onChange={onBoundsChange}
+                    defaultCenter={gprops.center}
+                    defaultZoom={gprops.zoom}
+                >
+                    {
+                        markers.map((m: MapLocation, index: number) => {
+                            return <Marker key={index} lat={m.Lat} lng={m.Lng}/>
+                        })
+                    }
+                </GoogleMapReact>
+
+            </div>
+            <div className="overflow-hidden w-full lg:w-1/3 bg-white relative">
+                <div className="w-full move-right bg-white">{result}</div>
+                <div className={`absolute top-0 left-0 absolutely-center hide-loader ${loader ? "block" : "hidden"}`}>
+                    <div className="lds-default">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
   );
 };
 
