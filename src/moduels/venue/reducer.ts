@@ -3,7 +3,7 @@ import { IVenueState, TAction } from "./types";
 
 const initialState: IVenueState = {
   isLoading: false,
-  data: undefined,
+  photos: {},
   error: null
 };
 
@@ -15,7 +15,15 @@ const reducer: Reducer<IVenueState, TAction> = (
     case "VENUE_PIC":
       return { ...state, error: null, isLoading: true };
     case "VENUE_PIC_SUCCESS":
-      return { ...state, error: null, isLoading: false, data: action.data };
+      return {
+        ...state,
+        error: null,
+        isLoading: false,
+        photos: {
+          ...state.photos,
+          [action.id]: action.data
+        }
+      };
     case "VENUE_PIC_FAIL":
       return { ...state, isLoading: false, error: action.error };
     default:

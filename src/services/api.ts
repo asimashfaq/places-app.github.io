@@ -41,9 +41,17 @@ export const getvenuePicResults = (
 ) => {
   if (useFakeData || window.localStorage.getItem("use_fake_data")) {
     alwaysUseFakeNow();
-    return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.photos[queryId] }), 300);
-    });
+    if (fakeData.photos[queryId]) {
+      return new Promise(function(resolve) {
+        setTimeout(() => {
+          return resolve({ data: fakeData.photos[queryId as string] });
+        }, 500);
+      });
+    } else {
+      return Promise.reject(
+        new Error("There is no data for this venue in fake DB.")
+      );
+    }
   } else {
     return axios.get("/venues/" + queryId + "/photos", {
       params: {

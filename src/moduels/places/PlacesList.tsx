@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Spinner } from "reactstrap";
 import { IPlacesListState, Item } from "./types";
 import { useDispatch, useSelector } from "../../hooks/react-redux";
-import DataItem from "../venue/VenuePhoto";
+import Venue from "../venue/Venue";
 import { search } from "./action";
 import { useSearchContext } from "../../context/SearchContext";
 import GoogleMapReact, { ChangeEventValue } from 'google-map-react';
@@ -68,7 +68,7 @@ const PlacesList: React.FC = () => {
       result = data.response.groups[0].items.map((item:Item) => {
         markers.push({Lat:item.venue.location.lat,Lng:item.venue.location.lng})
         // console.log(markers)
-        return <DataItem venue={item.venue} key={item.venue.id} />
+        return <Venue  venue={item.venue} key={item.venue.id} />
       });
      
     }

@@ -2,7 +2,7 @@ import {
   IVenuePicAction,
   IVenuePicFailAction,
   IVenuePicSuccessAction,
-  vObject
+  vPhotoObject
 } from "./types";
 
 export const venuePic = (queryId: string): IVenuePicAction => ({
@@ -10,9 +10,13 @@ export const venuePic = (queryId: string): IVenuePicAction => ({
   queryId
 });
 
-export const venuepicSuccess = (data: vObject): IVenuePicSuccessAction => ({
+export const venuepicSuccess = (
+  data: vPhotoObject,
+  id: string
+): IVenuePicSuccessAction => ({
   type: "VENUE_PIC_SUCCESS",
-  data
+  data,
+  id
 });
 
 export const venuepicFail = (error: {

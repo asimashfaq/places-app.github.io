@@ -1,7 +1,7 @@
 import { IObject } from "../moduels/places/types";
-import { vObject } from "../moduels/venue/types";
+import { vPhotoObject } from "../moduels/venue/types";
 interface venuePhotos {
-  [key: string]: vObject;
+  [key: string]: vPhotoObject;
 }
 const locations: IObject = {
   meta: {
@@ -496,10 +496,10 @@ const photos: venuePhotos = {
             createdAt: 1344082831,
             source: {
               name: "Foursquare for iOS",
-              url: "https:\\/\\/foursquare.com\\/download\\/#\\/iphone"
+              url: "https://foursquare.com/download/#/iphone"
             },
-            prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/general\\/",
-            suffix: "\\/ljcP9VHoVEHbRaUp5xP2lPKjAUxJ4o-XjwaJd-3qHEA.jpg",
+            prefix: "https://fastly.4sqi.net/img/general/",
+            suffix: "/ljcP9VHoVEHbRaUp5xP2lPKjAUxJ4o-XjwaJd-3qHEA.jpg",
             width: 405,
             height: 540,
             user: {
@@ -508,8 +508,8 @@ const photos: venuePhotos = {
               lastName: "Hunter",
               gender: "male",
               photo: {
-                prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/user\\/",
-                suffix: "\\/2395669-3JNE0PHJX0F4GPBN.jpg"
+                prefix: "https://fastly.4sqi.net/img/user/",
+                suffix: "/2395669-3JNE0PHJX0F4GPBN.jpg"
               }
             },
             checkin: {
@@ -539,11 +539,10 @@ const photos: venuePhotos = {
             createdAt: 1528629645,
             source: {
               name: "Swarm for iOS",
-              url: "https:\\/\\/www.swarmapp.com"
+              url: "https://www.swarmapp.com"
             },
-            prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/general\\/",
-            suffix:
-              "\\/2825902_5Sul6ZGCg4z31dwvd8QcnlZ2M_4lRdHoZFbXTd1AIow.jpg",
+            prefix: "https://fastly.4sqi.net/img/general/",
+            suffix: "/2825902_5Sul6ZGCg4z31dwvd8QcnlZ2M_4lRdHoZFbXTd1AIow.jpg",
             width: 1920,
             height: 1440,
             user: {
@@ -552,9 +551,9 @@ const photos: venuePhotos = {
               lastName: "Anderson-Foster",
               gender: "male",
               photo: {
-                prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/user\\/",
+                prefix: "https://fastly.4sqi.net/img/user/",
                 suffix:
-                  "\\/2825902_pp47pE55_rRQsR7EL5Oax7O-UL3JPqdgm2lXNF9UJdLoTe8BIcnH8mi5ijpOspqBwylW2bqC8.jpg"
+                  "/2825902_pp47pE55_rRQsR7EL5Oax7O-UL3JPqdgm2lXNF9UJdLoTe8BIcnH8mi5ijpOspqBwylW2bqC8.jpg"
               }
             },
             checkin: {
@@ -569,9 +568,9 @@ const photos: venuePhotos = {
                   lastName: "Anderson",
                   gender: "male",
                   photo: {
-                    prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/user\\/",
+                    prefix: "https://fastly.4sqi.net/img/user/",
                     suffix:
-                      "\\/210512_bZ0sE1sN_KprzeeHpAyCJ_Ps1HoOOfqHYZ575soHqqJ2bKQ0RJKOuy35zyDxeKP4AFNv2y7eJ.jpg"
+                      "/210512_bZ0sE1sN_KprzeeHpAyCJ_Ps1HoOOfqHYZ575soHqqJ2bKQ0RJKOuy35zyDxeKP4AFNv2y7eJ.jpg"
                   }
                 }
               ]
@@ -610,11 +609,10 @@ const photos: venuePhotos = {
             createdAt: 1562240467,
             source: {
               name: "Swarm for iOS",
-              url: "https:\\/\\/www.swarmapp.com"
+              url: "https://www.swarmapp.com"
             },
-            prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/general\\/",
-            suffix:
-              "\\/46463026_F41MqiYuaxGmN-o7TkcmLIGGo55e2uJ7_Gado6J-yxo.jpg",
+            prefix: "https://fastly.4sqi.net/img/general/",
+            suffix: "/46463026_F41MqiYuaxGmN-o7TkcmLIGGo55e2uJ7_Gado6J-yxo.jpg",
             width: 1920,
             height: 1440,
             user: {
@@ -622,9 +620,9 @@ const photos: venuePhotos = {
               firstName: "Paula C.",
               gender: "female",
               photo: {
-                prefix: "https:\\/\\/fastly.4sqi.net\\/img\\/user\\/",
+                prefix: "https://fastly.4sqi.net/img/user/",
                 suffix:
-                  "\\/46463026_fDcvYyCW_v03JpeRGJvJMh-hVXI8GixJmpGukTncPOAQZMNa8nAL7Cv0CXulkMH9XWWDXegn2.jpg"
+                  "/46463026_fDcvYyCW_v03JpeRGJvJMh-hVXI8GixJmpGukTncPOAQZMNa8nAL7Cv0CXulkMH9XWWDXegn2.jpg"
               }
             },
             checkin: {

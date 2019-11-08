@@ -1,29 +1,29 @@
 import React from "react";
-import { Venue } from "../places/types";
+import { Venue as IVenue } from "../places/types";
 import { useSearchContext } from "../../context/SearchContext";
 import { useDispatch, useSelector } from "../../hooks/react-redux";
 import { venuePic } from "./action";
-import { IVenueState } from "./types";
+import { IVenueState, Item } from "./types";
 
-const VenuePhoto = ({venue} : {venue: Venue}) => {
+const Venue = ({venue} : {venue: IVenue}) => {
 
   const { query } = useSearchContext();
   const dispatch = useDispatch();
 
-  const { data, isLoading, error } = useSelector(
-    ({ dataList }: { dataList: IVenueState }) => {
+  const { photos, isLoading, error } = useSelector(
+    ({ venuePic }: { venuePic: IVenueState }) => {
       return {
-        isLoading: dataList.isLoading,
-        data: dataList.data, 
-        error: dataList.error
+        isLoading: venuePic.isLoading,
+        photos: venuePic.photos, 
+        error: venuePic.error
       };
     }
   ) as IVenueState;
 
   React.useEffect(() => {
     if (query.length < 1) return;
-    dispatch(venuePic('412d2800f964a520df0c1fe3'));
-  }, [query, dispatch]);
+    dispatch(venuePic(venue.id));
+  }, [venue.id, dispatch]);
 
   return (
     <div className="recipe-item px-4 py-3 d-flex align-items-start justify-content-start flex-column flex-lg-row flex justify-between
@@ -33,12 +33,20 @@ const VenuePhoto = ({venue} : {venue: Venue}) => {
             <p className="text-sm mt-1 text-blue-900 italic">{venue.location.formattedAddress} min</p>
           </div>
           <div className="ml-2 w-16 h-12">
-            <img src="data"></img>
+            {
+              photos && 
+              photos[venue.id] &&
+              photos[venue.id].response.photos.items.map((photo:Item, index:number)=>{ return ( 
+                <img key={`${venue.id},${index}`} src={`${photo.prefix}${photo.width}x${photo.height}${photo.suffix}`}></img>
+                )
+              }
+              )
+            }
           </div>
       </div>
   );
 };
 
-export { VenuePhoto };
-export default VenuePhoto;
+export { Venue };
+export default Venue;
 
