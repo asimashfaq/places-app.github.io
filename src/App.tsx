@@ -1,8 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
-import { Route, Switch, Redirect } from "react-router-dom";
 import { SearchProvider } from "./context/SearchContext";
-import DataList from "./moduels/placeslist/PlacesList"
+import DataList from "./moduels/places/PlacesList"
 import "../src/App.css";
 
 import { Header, Footer } from "./views";

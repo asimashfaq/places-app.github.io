@@ -18,7 +18,7 @@ export interface Photo {
 export interface User {
   id: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   gender: string;
   photo: Photo;
 }
@@ -28,6 +28,7 @@ export interface Checkin {
   createdAt: number;
   type: string;
   timeZoneOffset: number;
+  with?: any;
 }
 
 export interface Item {
@@ -53,7 +54,7 @@ export interface Response {
   photos: Photos;
 }
 
-export interface pObject {
+export interface vObject {
   meta: Meta;
   response: Response;
 }
@@ -63,7 +64,7 @@ export interface IVenuePicAction extends Action<"VENUE_PIC"> {
 }
 
 export interface IVenuePicSuccessAction extends Action<"VENUE_PIC_SUCCESS"> {
-  data: pObject;
+  data: vObject;
 }
 
 export interface IVenuePicFailAction extends Action<"VENUE_PIC_FAIL"> {
@@ -78,5 +79,5 @@ export type TAction =
 export interface IVenueState {
   isLoading?: boolean;
   error?: { message: string } | null;
-  data?: pObject;
+  data?: vObject;
 }

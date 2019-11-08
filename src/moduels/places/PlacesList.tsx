@@ -6,8 +6,7 @@ import DataItem from "../venue/VenuePhoto";
 import { search } from "./action";
 import { useSearchContext } from "../../context/SearchContext";
 import GoogleMapReact, { ChangeEventValue } from 'google-map-react';
-import './PlacesList.scss'
-import GoogleMap from "../googleMap/GoogleMap";
+import './PlacesList.scss';
 import * as config from "../../config";
 const gprops = {
   center: {
@@ -31,7 +30,7 @@ const PlacesList: React.FC = () => {
  const { query } = useSearchContext();
  const [lat , setLat] = useState(gprops.center.lat)
  const [lng , setLng] = useState(gprops.center.lng)
- const [markers,setMarker] = useState([] as MapLocation[])
+ const [markers] = useState([] as MapLocation[])
   const dispatch = useDispatch();
 
   const { data, isLoading, error } = useSelector(

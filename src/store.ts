@@ -2,8 +2,8 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { searchEpic } from "./moduels/placeslist/epics";
-import datalistReducer from "./moduels/placeslist/reducer";
+import { searchEpic } from "./moduels/places/epics";
+import datalistReducer from "./moduels/places/reducer";
 import { venuePicEpic } from "./moduels/venue/epics";
 import venuePicReducer from "./moduels/venue/reducer";
 

@@ -1,9 +1,9 @@
 import React from "react";
-import { Venue } from "../placeslist/types";
+import { Venue } from "../places/types";
 import { useSearchContext } from "../../context/SearchContext";
 import { useDispatch, useSelector } from "../../hooks/react-redux";
 import { venuePic } from "./action";
-import { IVenueState, Item } from "./types";
+import { IVenueState } from "./types";
 
 const VenuePhoto = ({venue} : {venue: Venue}) => {
 

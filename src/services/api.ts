@@ -17,7 +17,7 @@ export const getSearchResults = (
   if (useFakeData || window.localStorage.getItem("use_fake_data")) {
     alwaysUseFakeNow();
     return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.results }), 300);
+      setTimeout(() => resolve({ data: fakeData.locations }), 300);
     });
   } else {
     return axios.get("/venues/explore", {
@@ -42,7 +42,7 @@ export const getvenuePicResults = (
   if (useFakeData || window.localStorage.getItem("use_fake_data")) {
     alwaysUseFakeNow();
     return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.results }), 300);
+      setTimeout(() => resolve({ data: fakeData.photos[queryId] }), 300);
     });
   } else {
     return axios.get("/venues/" + queryId + "/photos", {
