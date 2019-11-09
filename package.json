@@ -36,12 +36,12 @@
     "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
-    "build": "yarn run clean-dist && webpack -p --config=configs/webpack/prod.js",
+    "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "lint": "tslint './src/**/*.ts*' --format stylish --project . --force",
-    "start": "yarn run start-dev",
-    "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
-    "start-prod": "yarn run build && node express.js",
+    "start": "npm run start-dev",
+    "start-dev": "npm run build:css && webpack-dev-server --config=configs/webpack/dev.js",
+    "start-prod": "npm run build && node express.js",
     "test": "jest  --coverage --config=configs/jest.json",
     "test:watch": "jest --watch --coverage --config=configs/jest.json",
     "build:css": "tailwind build src/style.css -o src/App.css"

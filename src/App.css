@@ -11394,8 +11394,14 @@ video {
   transition: all .23s ease-out;
 }
 
-button{
+button {
   outline: none !important;
+}
+
+/* === Map style === */
+
+.h-map {
+  height: calc(50vh - 74px);
 }
 
 /* == Css Animations == */
@@ -11428,24 +11434,24 @@ button{
 }
 
 @-webkit-keyframes hideLoader {
-  to{
+  to {
     visibility: hidden;
   }
 }
 
 @keyframes hideLoader {
-  to{
+  to {
     visibility: hidden;
   }
 }
 
 /* === Loader Css === */
 
-.absolutely-center{
+.absolutely-center {
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .lds-default {
@@ -11570,6 +11576,12 @@ button{
   50% {
     -webkit-transform: scale(1.5);
             transform: scale(1.5);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .h-map {
+    height: calc(100vh - 74px);
   }
 }
 

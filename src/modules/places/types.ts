@@ -172,4 +172,5 @@ export interface IPlacesListState {
   isLoading?: boolean;
   error?: { message: string } | null;
   data?: IObject;
+  photo?: any;
 }
