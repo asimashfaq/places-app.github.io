@@ -1,12 +1,11 @@
 import React from "react";
 import { Venue as IVenue, Category } from "../places/types";
-import { useSearchContext } from "../../context/SearchContext";
-import { useDispatch, useSelector } from "../../hooks/react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
 
 const Venue = ({ venue }: { venue: IVenue }) => {
-  const { query } = useSearchContext();
+
   const dispatch = useDispatch();
 
   const { photos, isLoading, error } = useSelector(
@@ -20,7 +19,7 @@ const Venue = ({ venue }: { venue: IVenue }) => {
   ) as IVenueState;
 
   React.useEffect(() => {
-    if (query.length < 1) return;
+    if (!venue.id) return;
     dispatch(venuePhotosLoad(venue.id));
   }, [venue.id, dispatch]);
 
@@ -68,7 +67,7 @@ const Venue = ({ venue }: { venue: IVenue }) => {
           )
         ) : (
           <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
-            <p className="m-auto text-gray-600">No Image</p>
+            <p className="noImage m-auto text-gray-600">No Image</p>
           </div>
         )}
       </div>

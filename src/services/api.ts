@@ -44,7 +44,7 @@ export const getvenuePicResults = async (
       return new Promise(function(resolve) {
         setTimeout(() => {
           return resolve({ data: fakeData.photos[queryId as string] });
-        }, 500);
+        }, 50);
       });
     } else {
       return Promise.reject(
