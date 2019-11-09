@@ -5,7 +5,7 @@ const Header:React.FC = () => {
   return (
     <>
      <header className="flex px-2 py-3 justify-between items-center sm:px-4">
-        <Link className="font-semibold text-lg sm:text-xl" to="">Places App</Link>
+        <Link className="font-semibold text-blue-800 text-lg sm:text-xl" to="">Places App</Link>
         <Search/>
       </header>
     </>

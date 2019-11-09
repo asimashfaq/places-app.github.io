@@ -27,9 +27,9 @@ const Marker = (props: any) => {
     props.data.photo.response.photos.items[0];
     return (
       <>
-          <div className="map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg" style={{minHeight: '50px'}}>
+          <div className="map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg hidden" style={{minHeight: '50px'}}>
               {photoItem &&
-              <div className="pins-image bg-cover rounded-lg"
+              <div className="pins-image bg-cover rounded-lg "
                    style={{backgroundImage: `url(${photoItem.prefix}${photoItem.width}x${photoItem.height}${photoItem.suffix})`}}>
               </div>
               }
@@ -40,10 +40,11 @@ const Marker = (props: any) => {
                       )
                   })}
               </p>
-              <div className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
+              
+          </div>
+          <div className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
                    style={{backgroundImage: `url(../../src/images/map-pin.png)`, paddingLeft: '4.5px'}}>
               </div>
-          </div>
       </>
   )
 };
@@ -54,6 +55,7 @@ const PlacesList: React.FC = () => {
     Lat: number;
     Lng: number;
   }
+  config.UpdateFakeData(false)
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
   const [lng, setLng] = useState(gprops.center.lng);
