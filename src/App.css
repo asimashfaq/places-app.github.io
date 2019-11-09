@@ -11445,6 +11445,26 @@ button {
   }
 }
 
+.map-wrapper{
+  height: calc(100vh - 74px);
+}
+
+.map-pin-wrapper{
+  min-width: 250px;
+  z-index: 100;
+  position: relative;
+  border: 1px solid rgba(0,0,0, .1);
+}
+
+.pins-image{
+  height: 130px;
+}
+
+.pin{
+  margin-bottom: -21px;
+  left: 42%;
+}
+
 /* === Loader Css === */
 
 .absolutely-center {
