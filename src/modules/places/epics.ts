@@ -14,7 +14,12 @@ export const searchEpic = (action$: any) =>
     ofType("SEARCH"),
     switchMap((action: ISearchAction) =>
       from(
-        api.getSearchResults(action.query, action.lat, action.lng, false)
+        api.getSearchResults(
+          action.query,
+          action.lat,
+          action.lng,
+          config.USE_FAKE_DATA
+        )
       ).pipe(
         map((response: any) => searchSuccess(response.data)),
         catchError(error => {

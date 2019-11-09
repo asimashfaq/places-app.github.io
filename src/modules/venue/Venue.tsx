@@ -1,6 +1,6 @@
 import React from "react";
 import { Venue as IVenue, Category } from "../places/types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/react-redux";
 import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
 import { useSearchContext } from "../../context/SearchContext";

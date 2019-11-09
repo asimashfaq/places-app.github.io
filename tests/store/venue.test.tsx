@@ -1,5 +1,5 @@
 import React from "react";
-import {  mount } from "../../src/enzyme";
+import { mount } from "../../src/enzyme";
 import configureMockStore from "redux-mock-store";
 import { Venue } from "../../src/modules/venue/Venue";
 import { locations as venues } from "../../src/services/data";
@@ -12,7 +12,9 @@ import {
 } from "../../src/modules/venue/constants";
 import { venuePhotoEpic } from "../../src/modules/venue/epics";
 import { createEpicMiddleware } from "redux-observable";
-
+import * as SearchContext from "../../src/context/SearchContext";
+let epicMiddleware = createEpicMiddleware();
+const createMockStore = configureMockStore([epicMiddleware]);
 const createState = (initialState: any) => (actions: any) => {
   return {
     venuePic: actions.reduce(venuePicReducer, initialState)
@@ -24,15 +26,18 @@ const initialState = createState({
   error: null
 });
 describe("venue store", () => {
-  let epicMiddleware = createEpicMiddleware();
-
-  const createMockStore = configureMockStore([epicMiddleware]);
-
   let wrapper;
   let store;
+
   beforeEach(() => {
+    // config.UpdateFakeData(true)
     store = createMockStore(initialState);
     epicMiddleware.run(venuePhotoEpic);
+    const contextValues = { query: "coffe", updateQuery: q => {} };
+
+    jest
+      .spyOn(SearchContext, "useSearchContext")
+      .mockImplementation(() => contextValues);
 
     wrapper = mount(
       <Provider store={store}>
@@ -40,13 +45,9 @@ describe("venue store", () => {
       </Provider>
     );
   });
-  afterEach(() => {
-    store = undefined;
-  });
 
   it("should load the photos ", async () => {
     const actions = store.getActions();
-
     await waitForExpect(() => {
       wrapper.update();
       expect(actions[0].type).toEqual(VENUE_PHOTOS);

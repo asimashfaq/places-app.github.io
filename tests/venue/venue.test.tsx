@@ -1,17 +1,15 @@
 import React from "react";
-import { shallow, mount } from "../../src/enzyme";
+import {  mount } from "../../src/enzyme";
 import configureMockStore from "redux-mock-store";
 import { Venue } from "../../src/modules/venue/Venue";
 import { locations as venues } from "../../src/services/data";
 import waitForExpect from "wait-for-expect";
 import venuePicReducer from "../../src/modules/venue/reducer";
 import { Provider } from "react-redux";
-import {
-  VENUE_PHOTOS,
-  VENUE_PHOTOS_SUCCESS
-} from "../../src/modules/venue/constants";
 import { venuePhotoEpic } from "../../src/modules/venue/epics";
 import { createEpicMiddleware } from "redux-observable";
+import * as SearchContext from "../../src/context/SearchContext";
+import * as ReactReduxHooks from "../../src/hooks/react-redux";
 
 const createState = (initialState: any) => (actions: any) => {
   return {
@@ -28,9 +26,14 @@ describe("venue view", () => {
   const createMockStore = configureMockStore([epicMiddleware]);
   let wrapper;
   let store;
+
   beforeEach(() => {
     store = createMockStore(initialState);
     epicMiddleware.run(venuePhotoEpic);
+    const contextValues = { query: "coffe", updateQuery: q => {} };
+    jest
+      .spyOn(SearchContext, "useSearchContext")
+      .mockImplementation(() => contextValues);
 
     wrapper = mount(
       <Provider store={store}>
@@ -43,9 +46,7 @@ describe("venue view", () => {
   });
 
   it("should show no image box", async () => {
-    const actions = store.getActions();
-    const venuId = venues.response.groups[0].items[1].venue.id;
-    wrapper.props().store.getState = jest.fn().mockImplementation(() => {
+   wrapper.props().store.getState = jest.fn().mockImplementation(() => {
       return {
         venuePic: {
           isLoading: false,
@@ -64,7 +65,7 @@ describe("venue view", () => {
     });
     await waitForExpect(() => {
       wrapper.update();
-      expect(wrapper.find('.noImage')).toHaveLength(1);
+      expect(wrapper.find(".noImage")).toHaveLength(1);
     });
 
     wrapper.unmount();
