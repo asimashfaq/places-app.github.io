@@ -2,10 +2,10 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { searchEpic } from "./moduels/places/epics";
-import datalistReducer from "./moduels/places/reducer";
-import { venuePhotoEpic } from "./moduels/venue/epics";
-import venuePicReducer from "./moduels/venue/reducer";
+import { searchEpic } from "./modules/places/epics";
+import datalistReducer from "./modules/places/reducer";
+import { venuePhotoEpic } from "./modules/venue/epics";
+import venuePicReducer from "./modules/venue/reducer";
 
 const rootReducer = combineReducers({
   dataList: datalistReducer,

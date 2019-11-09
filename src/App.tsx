@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 import { SearchProvider } from "./context/SearchContext";
-import Places from "./moduels/places/Places";
+import Places from "./modules/places/Places";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";

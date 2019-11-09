@@ -1,5 +1,5 @@
-import { IObject } from "../moduels/places/types";
-import { VenuePhotos } from "../moduels/venue/types";
+import { IObject } from "../modules/places/types";
+import { VenuePhotos } from "../modules/venue/types";
 interface venuePhotos {
   [key: string]: VenuePhotos;
 }

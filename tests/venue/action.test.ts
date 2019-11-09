@@ -2,18 +2,18 @@ import {
   venuePhotosFail,
   venuePhotosLoad,
   venuePhotosSuccess
-} from "../../src/moduels/venue/action";
+} from "../../src/modules/venue/action";
 import {
   VENUE_PHOTOS,
   VENUE_PHOTOS_FAIL,
   VENUE_PHOTOS_SUCCESS
-} from "../../src/moduels/venue/constants";
+} from "../../src/modules/venue/constants";
 import {
   VenuePhotoLoadAction,
   VenuePhotos,
   VenuePhotosFailAction,
   VenuePhotosSuccessAction
-} from "../../src/moduels/venue/types";
+} from "../../src/modules/venue/types";
 
 describe("venue actions", () => {
   it("shoud create the action to load venue photos", () => {
