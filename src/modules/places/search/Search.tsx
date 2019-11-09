@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { SearchContext } from "../../../context/SearchContext";
 const PlaceSearch: React.FC = () => {
-  const [value, setValue] = useState("Park");
+  const [value, setValue] = useState("");
   const [showError, setShowError] = useState(false);
   const { updateQuery } = useContext(SearchContext);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -11,7 +11,6 @@ const PlaceSearch: React.FC = () => {
         setShowError(true);
       } else {
         setShowError(false);
-        updateQuery(value);
       }
   }, [value, updateQuery]);
 
@@ -49,7 +48,7 @@ const PlaceSearch: React.FC = () => {
           value={value}
           onChange={onChangeHandler}
         />{" "}
-        <i className="fas fa-search i-search" onClick={onSubmitHandler}></i>
+        <button onClick={onSubmitHandler} className="bg-white py-1 px-4 border border-blue-800 text-blue-800 border border-white rounded-full hover:bg-blue-800 hover:text-white hover:border-white sm:px-4">Search</button>
         {showError && (
           <small className="ml-1">Need be at least 3 characters</small>
         )}

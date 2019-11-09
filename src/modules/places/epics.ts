@@ -14,7 +14,7 @@ export const searchEpic = (action$: any) =>
     ofType("SEARCH"),
     switchMap((action: ISearchAction) =>
       from(
-        api.getSearchResults(action.query, action.lat, action.lng, true)
+        api.getSearchResults(action.query, action.lat, action.lng, false)
       ).pipe(
         map((response: any) => searchSuccess(response.data)),
         catchError(error => {

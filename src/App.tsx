@@ -19,12 +19,12 @@ function App() {
           <Router>
             <div className="bg-app w-100">
               <div className="h-screen flex flex-col">
+              <SearchProvider>
                 <div className="w-full py-2 bg-blue-800 text-white">
                   <Container className="mx-auto">
                     <Header />
                   </Container>
                 </div>
-                <SearchProvider>
                   <Places />
                 </SearchProvider>
               </div>

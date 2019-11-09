@@ -12,11 +12,10 @@ export const venuePhotoEpic = (action$: any) =>
   action$.pipe(
     ofType("VENUE_PHOTOS"),
     mergeMap((action: VenuePhotoLoadAction) =>
-      from(api.getvenuePicResults(action.queryId, true)).pipe(
+      from(api.getvenuePicResults(action.queryId, false)).pipe(
         map((response: any, err: any) =>
           venuePhotosSuccess(response.data, action.queryId)
         ),
-        //tap(item => console.log(item)),
         catchError(error => {
           if (error.needFakeData) {
             return from(api.getvenuePicResults(action.queryId, true)).map(

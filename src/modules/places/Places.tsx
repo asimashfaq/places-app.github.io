@@ -20,10 +20,10 @@ const gprops = {
 };
 
 const Marker = (props: any) => {
-  let photoItem =  props.data.photo.response.photos.items[0];
+  let photoItem =  props && props.data.photo && props.data.photo.response.photos && props.data.photo.response.photos.items[0];
   return <div className="SuperAwesomePin">
     <div>
-      {props.data.item.venue.location.formattedAddress}
+      {props.data && props.data.item.venue && props.data.item.venue.location.formattedAddress}
     </div>
     <div>
       {photoItem && 
@@ -59,26 +59,20 @@ const PlacesList: React.FC = () => {
   ) as IPlacesListState;
 
   const onBoundsChange = (value: ChangeEventValue) => {
-    console.log(value.center);
     setLat(value.center.lat);
     setLng(value.center.lng);
-
-    //dispatch(search(query,lat,lng, 0));
+    // dispatch(search(query,lat,lng));
   };
   React.useEffect(() => {
     if (query.length < 1) return;
     dispatch(search(query, lat, lng));
     setLoader(true);
-    setTimeout(() => {
-      // setLoader(false);
-    }, 300);
   }, [query, lat, lng, dispatch]);
 
   React.useEffect(() => {
     if (!isLoading) setLoader(false);
   }, [data.response, isLoading]);
   let result = null;
-
   if (isLoading) {
     result = <Spinner />;
   } else if (error) {
@@ -91,7 +85,6 @@ const PlacesList: React.FC = () => {
           Lat: item.venue.location.lat,
           Lng: item.venue.location.lng
         });
-        // console.log(markers)
         return <Venue venue={item.venue} key={item.venue.id} />;
       });
     }

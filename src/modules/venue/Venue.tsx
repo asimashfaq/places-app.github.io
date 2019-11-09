@@ -3,8 +3,10 @@ import { Venue as IVenue, Category } from "../places/types";
 import { useDispatch, useSelector } from "react-redux";
 import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
+import { useSearchContext } from "../../context/SearchContext";
 
 const Venue = ({ venue }: { venue: IVenue }) => {
+  const { query } = useSearchContext();
 
   const dispatch = useDispatch();
 
@@ -19,10 +21,10 @@ const Venue = ({ venue }: { venue: IVenue }) => {
   ) as IVenueState;
 
   React.useEffect(() => {
-    if (!venue.id) return;
+    if (!venue.id || query.length < 1) return;
     dispatch(venuePhotosLoad(venue.id));
   }, [venue.id, dispatch]);
-
+  
   return (
     <div
       className="recipe-item px-4 py-3 d-flex align-items-start justify-content-start flex-column flex-lg-row flex justify-between
