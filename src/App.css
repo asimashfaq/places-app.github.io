@@ -11387,18 +11387,15 @@ video {
   z-index: auto;
 }
 
-/* ====== Custom Styles ====== */
-
-* {
-  -webkit-transition: all .23s ease-out;
-  transition: all .23s ease-out;
-}
-
 button {
   outline: none !important;
 }
 
 /* === Map style === */
+
+#google-map,.google-map {
+  height: 100%;
+}
 
 .h-map {
   height: calc(50vh - 74px);
@@ -11454,6 +11451,17 @@ button {
   z-index: 100;
   position: relative;
   border: 1px solid rgba(0,0,0, .1);
+  -webkit-transform: translate(-39%, calc(-100% - 21px));
+          transform: translate(-39%, calc(-100% - 21px));
+}
+
+.map-pin-wrapper::after{
+  content: '';
+  border-width: 10px;
+  border-color: #ffffff transparent transparent transparent;
+  position: absolute;
+  top: 100%;
+  left: 42%;
 }
 
 .pins-image{

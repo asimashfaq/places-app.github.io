@@ -18,8 +18,18 @@ const gprops = {
   visibleRowLast: -1,
   hoveredRowIndex: -1
 };
+const boxRefs: any = []
 
+let itemHover = -1;
 const Marker = (props: any) => {
+ 
+  const _onMouseEnterContent = (/*e*/) => {
+    props.aref.classList.add('bg-gray-300')
+  }
+
+  const _onMouseLeaveContent = (/*e*/) => {
+    props.aref.classList.contains('bg-gray-300') && props.aref.classList.remove('bg-gray-300')
+  }
   let photoItem =
     props &&
     props.data.photo &&
@@ -27,24 +37,39 @@ const Marker = (props: any) => {
     props.data.photo.response.photos.items[0];
     return (
       <>
-          <div className="map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg hidden" style={{minHeight: '50px'}}>
+          <div className={`map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg ${props.$hover? '':'  hidden'}`} style={{minHeight: '50px'}}>
+          {/* <div className={`map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg ${props.index === 3 ? '':' hidden'}`} style={{minHeight: '50px'}}> */}
               {photoItem &&
               <div className="pins-image bg-cover rounded-lg "
                    style={{backgroundImage: `url(${photoItem.prefix}${photoItem.width}x${photoItem.height}${photoItem.suffix})`}}>
               </div>
               }
-              <p className="mt-3 text-sm">
+              <div className="mt-3 text-sm">
                   {props.data.item.venue.location.formattedAddress.map((item,index) => {
                       return (
-                          <p className={`${index === 0 ? "font-bold text-base mb-1" : ""}`}>{item}</p>
+                          <div key={index} className={`${index === 0 ? "font-bold text-base mb-1" : ""}`}>{item}</div>
                       )
                   })}
-              </p>
+              </div>
               
           </div>
-          <div className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
-                   style={{backgroundImage: `url(../../src/images/map-pin.png)`, paddingLeft: '4.5px'}}>
-              </div>
+          {props.$hover ? 
+            <div 
+            
+            onMouseEnter={_onMouseEnterContent}
+            onMouseLeave={_onMouseLeaveContent} 
+            className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
+              style={{backgroundImage: `url(../../src/images/red-pin.png)`, zIndex: 1000 , paddingLeft: '4.5px'}}>
+            </div>:
+            <div className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
+            onMouseEnter={_onMouseEnterContent}
+            onMouseLeave={_onMouseLeaveContent} 
+                  style={{backgroundImage: `url(../../src/images/map-pin.png)`, paddingLeft: '4.5px'}}>
+            </div>
+          }
+         
+
+              
       </>
   )
 };
@@ -55,15 +80,15 @@ const PlacesList: React.FC = () => {
     Lat: number;
     Lng: number;
   }
-  config.UpdateFakeData(false)
+  config.UpdateFakeData(true)
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
   const [lng, setLng] = useState(gprops.center.lng);
   const [loader, setLoader] = useState(false);
 
-  const [markers] = useState([] as MapLocation[]);
+  const [markers, setMarkers] = useState([] as MapLocation[]);
   const dispatch = useDispatch();
-
+  
   const { data, photo, isLoading, error } = useSelector(
     ({ dataList, venuePic }: { dataList: IPlacesListState; venuePic: any }) => {
       return {
@@ -80,8 +105,10 @@ const PlacesList: React.FC = () => {
     setLng(value.center.lng);
     // dispatch(search(query,lat,lng));
   };
+
   React.useEffect(() => {
     if (query.length < 1) return;
+    setMarkers([]);
     dispatch(search(query, lat, lng));
     setLoader(true);
   }, [query, lat, lng, dispatch]);
@@ -96,13 +123,24 @@ const PlacesList: React.FC = () => {
     result = <div>{error.message}</div>;
   } else if (data && data.meta.code === 200) {
     if (data.response.groups[0].items.length > 0) {
-      result = data.response.groups[0].items.map((item: Item) => {
+      result = data.response.groups[0].items.map((item: Item, index:any) => {
         markers.push({
-          data: { item, photo: photo.photos[item.venue.id] },
+          data: { 
+            item, photo: photo.photos[item.venue.id],
+           
+          },
           Lat: item.venue.location.lat,
           Lng: item.venue.location.lng
         });
-        return <Venue venue={item.venue} key={item.venue.id} />;
+        return (
+          <Venue
+            venue={item.venue}
+            ref={(input: any) => {   
+              boxRefs[`box-${item.venue.id}`] = input;
+            }}
+            key={item.venue.id}
+          />
+        );
       });
     }
   }
@@ -113,16 +151,18 @@ const PlacesList: React.FC = () => {
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyCGfO7rXQBR5j7EKJBafS3soCPpLhqW-J0" }}
           onChange={onBoundsChange}
+          onDrag={onBoundsChange}
+          debounced={false}
           defaultCenter={gprops.center}
           defaultZoom={gprops.zoom}
         >
           {markers.map((m: MapLocation, index: number) => {
-            return <Marker key={index} data={m.data} lat={m.Lat} lng={m.Lng} />;
+            return <Marker  aref={boxRefs[`box-${m.data.item.venue.id}`]}  key={m.data.item.venue.id+index} data={m.data} lat={m.Lat} lng={m.Lng} />;
           })}
         </GoogleMapReact>
       </div>
       <div className="overflow-auto w-full lg:w-1/3 bg-white relative">
-        <div className="w-full move-right bg-white">{result}</div>
+        <div className="itemhover w-full move-right bg-white" id={""+itemHover} >{result}</div>
         <div
           className={`absolute top-0 left-0 absolutely-center hide-loader ${
             loader ? "block" : "hidden"
