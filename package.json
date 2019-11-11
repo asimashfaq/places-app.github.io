@@ -2,7 +2,7 @@
   "name": "xbetwin-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/asimashfaq/places-app.github.io.git",
+  "homepage": "https://github.com/asimashfaq/places-app.github.io",
   "dependencies": {
     "@types/jest": "^24.0.22",
     "@types/node": "12.12.3",
@@ -47,7 +47,7 @@
     "test": "NODE_ENV=test && jest  --coverage --config=configs/jest.json",
     "test:watch": "NODE_ENV=test && jest --watch --coverage --config=configs/jest.json",
     "build:css": "tailwind build src/style.css -o src/App.css",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "eslintConfig": {
     "extends": "react-app"
