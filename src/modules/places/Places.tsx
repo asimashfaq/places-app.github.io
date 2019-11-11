@@ -1,42 +1,34 @@
 import React, { useState, useRef } from "react";
 import { Spinner } from "reactstrap";
+import _ from "lodash";
+import GoogleMapReact, { ChangeEventValue } from "google-map-react";
+
 import { IPlacesListState, Item } from "./types";
-import { useDispatch, useSelector } from "../../hooks/react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Venue from "../venue/Venue";
 import { search } from "./action";
 import { useSearchContext } from "../../context/SearchContext";
-import GoogleMapReact, { ChangeEventValue } from "google-map-react";
-import "./Places.scss";
 import * as config from "../../config";
 import Marker from "./Marker";
-const gprops = {
-  center: {
-    lat: config.LAT,
-    lng: config.LNG
-  },
-  zoom: 10,
-  visibleRowFirst: -1,
-  visibleRowLast: -1,
-  hoveredRowIndex: -1
-};
-let boxRefs: any = [];
 
-let refMarkers = [];
-let itemHover = -1;
-let markers = [];
 const PlacesList: React.FC = () => {
-  interface MapLocation {
-    data: any;
-    Lat: number;
-    Lng: number;
-    visible: boolean;
-  }
-  //config.UpdateFakeData(true);
+  config.UseFakeData(true);
+  const gprops = {
+    center: {
+      lat: config.LAT,
+      lng: config.LNG
+    },
+    zoom: 10
+  };
+  let boxRefs: any = [];
+  let refMarkers = [];
+  let itemHover = -1;
+  let markers = [];
+
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
   const [lng, setLng] = useState(gprops.center.lng);
   const [loader, setLoader] = useState(false);
-
   const dispatch = useDispatch();
 
   const { data, photo, isLoading, error } = useSelector(
@@ -55,7 +47,7 @@ const PlacesList: React.FC = () => {
     setLng(value.center.lng);
     // dispatch(search(query,lat,lng));
   };
-  const globalThis: any = global;
+  
   const _onMouseEnterContent = (e: any) => {
     const id = e.currentTarget.id as string;
     refMarkers[id].classList.remove("hide-all");
@@ -71,26 +63,21 @@ const PlacesList: React.FC = () => {
     markers = [];
     refMarkers = [];
     boxRefs = [];
-
     dispatch(search(query, lat, lng));
     setLoader(true);
   }, [query, lat, lng, dispatch]);
-
-  
   React.useEffect(() => {
     if (!isLoading) setLoader(false);
-  }, [data.response, isLoading]);
+  }, [_.get(data, "response", "undefined"), isLoading]);
   let result = null;
   if (isLoading) {
     result = <Spinner />;
   } else if (error) {
     result = <div>{error.message}</div>;
-  } else if (data && data.meta.code === 200) {
+  } else if (_.get(data,'meta.code','undefinded') === 200) {
     if (data.response.groups[0].items.length > 0) {
       result = data.response.groups[0].items.map((item: Item, index: any) => {
-
-
-        markers[item.venue.id] ={
+        markers[item.venue.id] = {
           data: {
             item,
             photo: photo.photos[item.venue.id]
@@ -126,7 +113,7 @@ const PlacesList: React.FC = () => {
           defaultZoom={gprops.zoom}
         >
           {Object.keys(markers).map((key: any, index: number) => {
-            const m = markers[key]
+            const m = markers[key];
             return (
               <Marker
                 ref={e => {

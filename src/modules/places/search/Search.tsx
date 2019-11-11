@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { SearchContext } from "../../../context/SearchContext";
 const PlaceSearch: React.FC = () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("Park");
   const [showError, setShowError] = useState(false);
   const { updateQuery } = useContext(SearchContext);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    
     if (value.length < 3) {
+    
         setShowError(true);
       } else {
+        updateQuery(value)
         setShowError(false);
       }
   }, [value, updateQuery]);

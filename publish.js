@@ -5,7 +5,7 @@ ghpages.publish(
   {
     branch: "master",
     dotfiles: true,
-    repo: "https://github.com/asimashfaq/places-app.github.io.git",
+    repo: "https://asimashfaq.github.io/places-app.github.io",
     dest: "./",
     push: true
   },
