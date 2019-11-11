@@ -1,5 +1,9 @@
 Places App
+`git clone https://github.com/asimashfaq/Places-App.git`
 
+`npm run install`
+
+## npm run start-dev
 
 1. Redux Observable 
 2. Rxjs
