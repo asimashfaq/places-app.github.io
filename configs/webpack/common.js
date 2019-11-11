@@ -2,6 +2,7 @@
 const { resolve } = require("path");
 const { CheckerPlugin } = require("awesome-typescript-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   resolve: {
@@ -22,8 +23,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
-          { loader: "css-loader", options: { importLoaders: 1 } }
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV === "development"
+            }
+          },
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader"
         ]
       },
       {
@@ -45,7 +52,11 @@ module.exports = {
   },
   plugins: [
     new CheckerPlugin(),
-    new HtmlWebpackPlugin({ template: "index.html.ejs" })
+    new HtmlWebpackPlugin({ template: "index.html.ejs" }),
+    new MiniCssExtractPlugin({
+      filename: "styles.css",
+      chunkFilename: "[id].css"
+    })
   ],
   externals: {
     react: "React",

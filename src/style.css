@@ -1,8 +1,24 @@
+
+
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
 
 
 
@@ -195,4 +211,15 @@ button {
 }
 .hover-marker>.blue-pin{
     visibility: hidden ;
+}
+.red-pin {
+    padding: "4.5px";
+    z-index: 1000;
+    background-image:url('./images/red-pin.png')
+}
+
+.blue-pin {
+    padding: "4.5px";
+    z-index: 1000;
+    background-image:url('./images/map-pin.png')
 }

@@ -8,9 +8,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import { Header } from "./views";
 
-
-import "../src/App.css";
-
 function App() {
   return (
     <>

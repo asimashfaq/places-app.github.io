@@ -11,7 +11,7 @@ import { useSearchContext } from "../../context/SearchContext";
 import * as config from "../../config";
 import Marker from "./Marker";
 
-const PlacesList: React.FC = () => {
+const Places: React.FC = () => {
   config.UseFakeData(true);
   const gprops = {
     center: {
@@ -161,6 +161,6 @@ const PlacesList: React.FC = () => {
   );
 };
 
-export { PlacesList };
+export { Places };
 
-export default PlacesList;
+export default Places;

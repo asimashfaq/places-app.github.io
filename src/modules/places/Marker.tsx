@@ -22,7 +22,7 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
         <div
           className={`map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg `}
           style={{ minHeight: "50px" }}
-        >
+        > 
           {photoItem && (
             <div
               className="pins-image bg-cover rounded-lg "
@@ -53,21 +53,12 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
           onMouseEnter={_onMouseEnterContent}
           onMouseLeave={_onMouseLeaveContent}
           className="red-pin h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
-          style={{
-            backgroundImage: `url(../../src/images/red-pin.png)`,
-            zIndex: 1000,
-            paddingLeft: "4.5px"
-          }}
         ></div>
 
         <div
           className="blue-pin h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
           onMouseEnter={_onMouseEnterContent}
           onMouseLeave={_onMouseLeaveContent}
-          style={{
-            backgroundImage: `url(../../src/images/map-pin.png)`,
-            paddingLeft: "4.5px"
-          }}
         ></div>
       </div>
     </>

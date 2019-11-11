@@ -3,6 +3,7 @@ const merge = require("webpack-merge");
 const webpack = require("webpack");
 const commonConfig = require("./common");
 const TSLintPlugin = require("tslint-webpack-plugin");
+const path = require("path");
 module.exports = merge(commonConfig, {
   mode: "development",
   entry: [
@@ -12,7 +13,9 @@ module.exports = merge(commonConfig, {
     "./index.tsx" // the entry point of our app
   ],
   devServer: {
-    hot: true // enable HMR on the server
+    hot: true, // enable HMR on the server,
+    contentBase: path.resolve(__dirname, "../../src"),
+    watchContentBase: true
   },
   devtool: "cheap-module-eval-source-map",
   plugins: [
