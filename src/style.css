@@ -183,3 +183,16 @@ button {
         height: calc(100vh - 74px);
     }
 }
+
+.hide-all>div:first-child{
+    visibility: hidden !important;
+}
+.hide-all>.red-pin{
+    visibility: hidden;
+}
+.hover-marker>.red-pin{
+    visibility: visible ;
+}
+.hover-marker>.blue-pin{
+    visibility: hidden ;
+}

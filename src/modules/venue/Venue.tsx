@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from "../../hooks/react-redux";
 import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
 import { useSearchContext } from "../../context/SearchContext";
-import { HTMLAttributes } from "enzyme";
 
 interface Props {
-  venue: IVenue
+  venue: IVenue,
+  onMouseEnter:any
+  onMouseLeave:any
 }
 export type Ref =  any
 
@@ -34,6 +35,8 @@ const Venue =  React.memo(React.forwardRef<Ref, Props>(( props, ref ) => {
 
   return (
     <div id={`box-${props.venue.id}`}
+     onMouseEnter={props.onMouseEnter}
+     onMouseLeave={props.onMouseLeave}
       ref= {ref}
       className={`recipe-item px-4 py-3 d-flex align-items-start justify-content-start flex-column flex-lg-row flex justify-between
     border-b border-dark-700 cursor-pointer bg-white hover:bg-gray-300 `}

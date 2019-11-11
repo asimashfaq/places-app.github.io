@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Spinner } from "reactstrap";
 import { IPlacesListState, Item } from "./types";
 import { useDispatch, useSelector } from "../../hooks/react-redux";
@@ -8,6 +8,7 @@ import { useSearchContext } from "../../context/SearchContext";
 import GoogleMapReact, { ChangeEventValue } from "google-map-react";
 import "./Places.scss";
 import * as config from "../../config";
+import Marker from "./Marker";
 const gprops = {
   center: {
     lat: config.LAT,
@@ -18,77 +19,26 @@ const gprops = {
   visibleRowLast: -1,
   hoveredRowIndex: -1
 };
-const boxRefs: any = []
+let boxRefs: any = [];
 
+let refMarkers = [];
 let itemHover = -1;
-const Marker = (props: any) => {
- 
-  const _onMouseEnterContent = (/*e*/) => {
-    props.aref.classList.add('bg-gray-300')
-  }
-
-  const _onMouseLeaveContent = (/*e*/) => {
-    props.aref.classList.contains('bg-gray-300') && props.aref.classList.remove('bg-gray-300')
-  }
-  let photoItem =
-    props &&
-    props.data.photo &&
-    props.data.photo.response.photos &&
-    props.data.photo.response.photos.items[0];
-    return (
-      <>
-          <div className={`map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg ${props.$hover? '':'  hidden'}`} style={{minHeight: '50px'}}>
-          {/* <div className={`map-pin-wrapper text-xxs bg-white p-2 shadow-inner shadow-2xl rounded-lg ${props.index === 3 ? '':' hidden'}`} style={{minHeight: '50px'}}> */}
-              {photoItem &&
-              <div className="pins-image bg-cover rounded-lg "
-                   style={{backgroundImage: `url(${photoItem.prefix}${photoItem.width}x${photoItem.height}${photoItem.suffix})`}}>
-              </div>
-              }
-              <div className="mt-3 text-sm">
-                  {props.data.item.venue.location.formattedAddress.map((item,index) => {
-                      return (
-                          <div key={index} className={`${index === 0 ? "font-bold text-base mb-1" : ""}`}>{item}</div>
-                      )
-                  })}
-              </div>
-              
-          </div>
-          {props.$hover ? 
-            <div 
-            
-            onMouseEnter={_onMouseEnterContent}
-            onMouseLeave={_onMouseLeaveContent} 
-            className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
-              style={{backgroundImage: `url(../../src/images/red-pin.png)`, zIndex: 1000 , paddingLeft: '4.5px'}}>
-            </div>:
-            <div className="h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
-            onMouseEnter={_onMouseEnterContent}
-            onMouseLeave={_onMouseLeaveContent} 
-                  style={{backgroundImage: `url(../../src/images/map-pin.png)`, paddingLeft: '4.5px'}}>
-            </div>
-          }
-         
-
-              
-      </>
-  )
-};
-
+let markers = [];
 const PlacesList: React.FC = () => {
   interface MapLocation {
     data: any;
     Lat: number;
     Lng: number;
+    visible: boolean;
   }
-  config.UpdateFakeData(true)
+  //config.UpdateFakeData(true);
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
   const [lng, setLng] = useState(gprops.center.lng);
   const [loader, setLoader] = useState(false);
 
-  const [markers, setMarkers] = useState([] as MapLocation[]);
   const dispatch = useDispatch();
-  
+
   const { data, photo, isLoading, error } = useSelector(
     ({ dataList, venuePic }: { dataList: IPlacesListState; venuePic: any }) => {
       return {
@@ -105,14 +55,28 @@ const PlacesList: React.FC = () => {
     setLng(value.center.lng);
     // dispatch(search(query,lat,lng));
   };
+  const globalThis: any = global;
+  const _onMouseEnterContent = (e: any) => {
+    const id = e.currentTarget.id as string;
+    refMarkers[id].classList.remove("hide-all");
+  };
+
+  const _onMouseLeaveContent = (e: any) => {
+    const id = e.currentTarget.id;
+    refMarkers[id].classList.add("hide-all");
+  };
 
   React.useEffect(() => {
     if (query.length < 1) return;
-    setMarkers([]);
+    markers = [];
+    refMarkers = [];
+    boxRefs = [];
+
     dispatch(search(query, lat, lng));
     setLoader(true);
   }, [query, lat, lng, dispatch]);
 
+  
   React.useEffect(() => {
     if (!isLoading) setLoader(false);
   }, [data.response, isLoading]);
@@ -123,19 +87,24 @@ const PlacesList: React.FC = () => {
     result = <div>{error.message}</div>;
   } else if (data && data.meta.code === 200) {
     if (data.response.groups[0].items.length > 0) {
-      result = data.response.groups[0].items.map((item: Item, index:any) => {
-        markers.push({
-          data: { 
-            item, photo: photo.photos[item.venue.id],
-           
+      result = data.response.groups[0].items.map((item: Item, index: any) => {
+
+
+        markers[item.venue.id] ={
+          data: {
+            item,
+            photo: photo.photos[item.venue.id]
           },
           Lat: item.venue.location.lat,
-          Lng: item.venue.location.lng
-        });
+          Lng: item.venue.location.lng,
+          visible: false
+        };
         return (
           <Venue
+            onMouseEnter={_onMouseEnterContent}
+            onMouseLeave={_onMouseLeaveContent}
             venue={item.venue}
-            ref={(input: any) => {   
+            ref={(input: any) => {
               boxRefs[`box-${item.venue.id}`] = input;
             }}
             key={item.venue.id}
@@ -156,13 +125,30 @@ const PlacesList: React.FC = () => {
           defaultCenter={gprops.center}
           defaultZoom={gprops.zoom}
         >
-          {markers.map((m: MapLocation, index: number) => {
-            return <Marker  aref={boxRefs[`box-${m.data.item.venue.id}`]}  key={m.data.item.venue.id+index} data={m.data} lat={m.Lat} lng={m.Lng} />;
+          {Object.keys(markers).map((key: any, index: number) => {
+            const m = markers[key]
+            return (
+              <Marker
+                ref={e => {
+                  refMarkers[`box-${m.data.item.venue.id}`] = e;
+                }}
+                aref={boxRefs[`box-${m.data.item.venue.id}`]}
+                key={m.data.item.venue.id + index}
+                data={m.data}
+                lat={m.Lat}
+                lng={m.Lng}
+              />
+            );
           })}
         </GoogleMapReact>
       </div>
       <div className="overflow-auto w-full lg:w-1/3 bg-white relative">
-        <div className="itemhover w-full move-right bg-white" id={""+itemHover} >{result}</div>
+        <div
+          className="itemhover w-full move-right bg-white"
+          id={"" + itemHover}
+        >
+          {result}
+        </div>
         <div
           className={`absolute top-0 left-0 absolutely-center hide-loader ${
             loader ? "block" : "hidden"
