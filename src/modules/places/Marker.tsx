@@ -70,9 +70,8 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
             style={{
               backgroundImage: `url(../../src/images/map-pin.png)`,
               paddingLeft: "4.5px"}}
-           
           ></div>
-        )}
+      
       </div>
     </>
   );

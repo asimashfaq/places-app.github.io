@@ -2,6 +2,7 @@
   "name": "xbetwin-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://github.com/asimashfaq/places-app.github.io.git",
   "dependencies": {
     "@types/jest": "^24.0.22",
     "@types/node": "12.12.3",
@@ -9,6 +10,7 @@
     "@types/react-dom": "16.9.3",
     "axios": "^0.19.0",
     "express": "^4.17.1",
+    "gh-pages": "^2.1.1",
     "google-map-react": "^1.1.5",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jest": "^24.9.0",
@@ -36,7 +38,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
-    "build": "npm run clean-dist && npm run build:css &&  && webpack -p --config=configs/webpack/prod.js",
+    "build": "npm run clean-dist && npm run build:css  && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rimraf dist/*",
     "lint": "tslint './src/**/*.ts*' --format stylish --project . --force",
     "start": "npm run start-dev",
@@ -44,7 +46,8 @@
     "start-prod": "npm run build && node express.js",
     "test": "NODE_ENV=test && jest  --coverage --config=configs/jest.json",
     "test:watch": "NODE_ENV=test && jest --watch --coverage --config=configs/jest.json",
-    "build:css": "tailwind build src/style.css -o src/App.css"
+    "build:css": "tailwind build src/style.css -o src/App.css",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
