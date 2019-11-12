@@ -9,10 +9,15 @@ import Venue from "../venue/Venue";
 import { search } from "./action";
 import { useSearchContext } from "../../context/SearchContext";
 import * as config from "../../config";
-import Marker from "./Marker";
+import Marker from "./marker/Marker";
+
+let boxRefs: any = [];
+let refMarkers = [];
+
 
 const Places: React.FC<{ location: any }> = ({ location }) => {
-  config.UseFakeData(false);
+  let markers = [];
+  config.UseFakeData(true);
   const params = parse(location.search);
   const gprops = {
     center: {
@@ -21,9 +26,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     },
     zoom: 10
   };
-  let boxRefs: any = [];
-  let refMarkers = [];
-  let markers = [];
+
   let result:any;
 
   const { query } = useSearchContext();
@@ -84,8 +87,6 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
           </span>
         </div>
       )
-        
-      
       }
     
   } else if (_.get(data, "meta.code", "undefinded") === 200) {
@@ -116,7 +117,6 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
       });
     }
   }
-
   return (
     <div className="flex flex-col flex-1 lg:flex-row bg-secondary map-wrapper">
       <div className="w-full lg:w-2/3 h-map">

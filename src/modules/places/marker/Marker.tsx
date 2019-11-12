@@ -3,7 +3,7 @@ import _ from "lodash";
 export type Ref = any;
 
 const Marker = React.forwardRef((props: any, ref: Ref) => {
-  const _onMouseEnterContent = () => {
+  const _onMouseEnterContent = (e:any) => {
     props.aref.classList.add("bg-gray-300");
   };
 

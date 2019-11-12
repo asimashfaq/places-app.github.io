@@ -15,6 +15,7 @@ export type Ref = any;
 
 const Venue = React.memo(
   React.forwardRef<Ref, Props>((props, ref) => {
+    let errorMessage;
     const { query } = useSearchContext();
     const dispatch = useDispatch();
     const { photos, isLoading, error } = useSelector(
@@ -31,6 +32,12 @@ const Venue = React.memo(
       if (!props.venue.id || query.length < 1) return;
       dispatch(venuePhotosLoad(props.venue.id));
     }, [props.venue.id, dispatch]);
+    if (error) {
+      const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
+      if (_.get(parseMessage, "meta", "").code == 429) {
+        errorMessage = parseMessage.meta.errorDetail
+      }
+    }
 
     return (
       <div
@@ -48,43 +55,69 @@ const Venue = React.memo(
             {props.venue.location.formattedAddress}
           </div>
           <div>
-            {
-            _.get(props,'venue.categories',[]).map(
-                (category: Category, index: number) => {
-                  return (
-                    <button
-                      key={`${category.id},${index}`}
-                      className="px-5 py-3 text-gray-500 text-center mt-3 rounded-full border border-gray-300 text-sm focus:border-gray-500 focus:text-gray-600"
-                    >
-                      {category.name}
-                    </button>
-                  );
-                }
-              )}
+            {_.get(props, "venue.categories", []).map(
+              (category: Category, index: number) => {
+                return (
+                  <button
+                    key={`${category.id},${index}`}
+                    className="px-5 py-3 text-gray-500 text-center mt-3 rounded-full border border-gray-300 text-sm focus:border-gray-500 focus:text-gray-600"
+                  >
+                    {category.name}
+                  </button>
+                );
+              }
+            )}
           </div>
         </div>
         <div
           className="ml-2 w-16 h-full w-3/6 min-h-full flex"
           style={{ minHeight: "200px" }}
         >
-          {
-          _.get(photos[props.venue.id], 'response.photos.items',[]).length > 0 ? (
-            photos[props.venue.id].response.photos.items.map(
-              (photo: Item, index: number) => {
-                return (
-                  <div
-                    key={`${props.venue.id},${index}`}
-                    className="flex-1 min-h-full bg-cover bg-gray-100 rounded-sm bg-center"
-                    style={{
-                      backgroundImage: `url(${photo.prefix}${photo.width}x${photo.height}${photo.suffix})`
-                    }}
-                  />
-                );
-              }
+          {isLoading == false && error == null ? (
+            _.get(photos[props.venue.id], "response.photos.items", []).length >
+            0 ? (
+              photos[props.venue.id].response.photos.items.map(
+                (photo: Item, index: number) => {
+                  return (
+                    <div
+                      key={`${props.venue.id},${index}`}
+                      className="flex-1 min-h-full bg-cover bg-gray-100 rounded-sm bg-center"
+                      style={{
+                        backgroundImage: `url(${photo.prefix}${photo.width}x${photo.height}${photo.suffix})`
+                      }}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
+                <p className="noImage m-auto text-gray-600">No Image</p>
+              </div>
             )
+          ) : error != null ? (
+            <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
+              <div className="noImage m-auto text-gray-600">
+                <div>{errorMessage}</div>
+              </div>
+            </div>
           ) : (
             <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
-              <p className="noImage m-auto text-gray-600">No Image</p>
+              <div className="noImage m-auto text-gray-600">
+                <div className="lds-default">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
             </div>
           )}
         </div>

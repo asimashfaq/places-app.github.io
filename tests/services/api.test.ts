@@ -2,7 +2,8 @@ import nock from "nock";
 import * as config from "../../src/config";
 import * as api from "../../src/services/api";
 describe("api test", () => {
-  it("should return the venue photos", async () => {
+  config.UseFakeData(false);
+  it("should return the empty venue", async () => {
     const expected = {
       venue: {
         count: 0,
@@ -27,7 +28,7 @@ describe("api test", () => {
     const result: any = await api.getSearchResults("cofe", 0, 0, false);
     expect(result.data).toEqual(expected);
   });
-  it("should handle the 400 response venue photos", async () => {
+  it("should handle the 400 response venues", async () => {
     const expected = {
       venue: {
         count: 0,
@@ -77,7 +78,6 @@ describe("api test", () => {
   });
   it("should return the error on venue photos", async () => {
     const VENUE_ID = "2";
-
     nock("https://api.foursquare.com")
       .get("/v2/venues/2/photos")
       .query({

@@ -9,7 +9,7 @@ export const getSearchResults = async (
 ) => {
   if (useFakeData) {
     return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.locations }), 3000);
+      setTimeout(() => resolve({ data: fakeData.locations }), 300);
     });
   } else {
     try {
@@ -22,11 +22,16 @@ export const getSearchResults = async (
             ll: `${lat},${lng}`,
             limit: 15,
             query: query,
-            radius: 50049,
+            radius: 5049,
             llAcc: 1000
           }
         })
         .catch((err: any) => {
+          if (err.response.status === 400) {
+            return Promise.reject(
+              new Error("Request failed with status code 400")
+            );
+          }
           return Promise.reject(new Error(JSON.stringify(err.response.data)));
         });
 
@@ -48,7 +53,7 @@ export const getvenuePicResults = async (
       return new Promise(function(resolve) {
         setTimeout(() => {
           return resolve({ data: fakeData.photos[queryId as string] });
-        }, 50);
+        }, 500);
       });
     } else {
       return Promise.reject(
@@ -57,13 +62,22 @@ export const getvenuePicResults = async (
     }
   } else {
     try {
-      const result = await axios.get("/venues/" + queryId + "/photos", {
-        params: {
-          client_id: config.CLIENT_ID,
-          client_secret: config.CLIENT_SECRET,
-          v: "20180323"
-        }
-      });
+      const result = await axios
+        .get("/venues/" + queryId + "/photos", {
+          params: {
+            client_id: config.CLIENT_ID,
+            client_secret: config.CLIENT_SECRET,
+            v: "20180323"
+          }
+        })
+        .catch((err: any) => {
+          if (err.response.status === 404) {
+            return Promise.reject(
+              new Error("Request failed with status code 404")
+            );
+          }
+          return Promise.reject(new Error(JSON.stringify(err.response.data)));
+        });
       return new Promise(function(resolve) {
         return resolve({ data: result.data });
       });

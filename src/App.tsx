@@ -3,15 +3,13 @@ import { SearchProvider } from "./context/SearchContext";
 import Places from "./modules/places/Places";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
+import { store } from "./store";
 import { Header } from "./views";
 
 function App() {
   return (
     <>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>   
           <Router>
             <div className="bg-app w-100 overflow-hidden">
               <div className="h-screen flex flex-col">
@@ -28,7 +26,6 @@ function App() {
               </div>
             </div>
           </Router>
-        </PersistGate>
       </Provider>
     </>
   );

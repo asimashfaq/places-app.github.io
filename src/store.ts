@@ -1,7 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { combineEpics, createEpicMiddleware } from "redux-observable";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import { searchEpic } from "./modules/places/epics";
 import datalistReducer from "./modules/places/reducer";
 import { venuePhotoEpic } from "./modules/venue/epics";
@@ -22,17 +20,9 @@ if (process.env.NODE_ENV === "development") {
   );
 }
 
-const persistConfig = {
-  key: "root",
-  storage
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store = createStore(persistedReducer, compose(...middlewares));
-const persistor = persistStore(store);
+const store = createStore(rootReducer, compose(...middlewares));
 
 const rootEpic = combineEpics(searchEpic, venuePhotoEpic);
 epicMiddleware.run(rootEpic);
 
-export { store, persistor };
+export { store };
