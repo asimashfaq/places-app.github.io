@@ -1,7 +1,7 @@
 import { IObject } from "../modules/places/types";
-import { VenuePhotos } from "../modules/venue/types";
-interface venuePhotos {
-  [key: string]: VenuePhotos;
+import { IVenuePhotos } from "../modules/venue/types";
+interface IVenuePhotosData {
+  [key: string]: IVenuePhotos;
 }
 const locations: IObject = {
   meta: {
@@ -438,7 +438,7 @@ const locations: IObject = {
   }
 };
 
-const photos: venuePhotos = {
+const photos: IVenuePhotosData = {
   "557c3971498ec5857dd9bdf4": {
     meta: {
       code: 200,

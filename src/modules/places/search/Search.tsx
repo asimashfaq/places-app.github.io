@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { SearchContext } from "../../../context/SearchContext";
 const PlaceSearch: React.FC = () => {
   const [value, setValue] = useState("Park");

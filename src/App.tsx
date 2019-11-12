@@ -1,8 +1,8 @@
 import React from "react";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { SearchProvider } from "./context/SearchContext";
 import Places from "./modules/places/Places";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider } from "react-redux";
 import { store } from "./store";
 import { Header } from "./views";
 

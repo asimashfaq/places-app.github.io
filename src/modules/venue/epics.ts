@@ -8,11 +8,11 @@ import { catchError, map, mergeMap } from "rxjs/operators";
 import * as config from "../../config";
 import * as api from "../../services/api";
 import { venuePhotosFail, venuePhotosSuccess } from "./action";
-import { VenuePhotoLoadAction } from "./types";
+import { IVenuePhotoLoadAction } from "./types";
 export const venuePhotoEpic = (action$: any) =>
   action$.pipe(
     ofType("VENUE_PHOTOS"),
-    mergeMap((action: VenuePhotoLoadAction) =>
+    mergeMap((action: IVenuePhotoLoadAction) =>
       from(api.getvenuePicResults(action.queryId, config.USE_FAKE_DATA)).pipe(
         map((response: any, err: any) =>
           venuePhotosSuccess(response.data, action.queryId)

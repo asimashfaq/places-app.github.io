@@ -4,30 +4,30 @@ import {
   VENUE_PHOTOS_FAIL,
   VENUE_PHOTOS_SUCCESS
 } from "./constants";
-export interface Meta {
+export interface IMeta {
   code: number;
   requestId: string;
 }
 
-export interface Source {
+export interface ISource {
   name: string;
   url: string;
 }
 
-export interface Photo {
+export interface IPhoto {
   prefix: string;
   suffix: string;
 }
 
-export interface User {
+export interface IUser {
   id: string;
   firstName: string;
   lastName?: string;
   gender: string;
-  photo: Photo;
+  photo: IPhoto;
 }
 
-export interface Checkin {
+export interface ICheckin {
   id: string;
   createdAt: number;
   type: string;
@@ -35,56 +35,56 @@ export interface Checkin {
   with?: any;
 }
 
-export interface Item {
+export interface IItem {
   id: string;
   createdAt: number;
-  source: Source;
+  source: ISource;
   prefix: string;
   suffix: string;
   width: number;
   height: number;
-  user: User;
-  checkin: Checkin;
+  user: IUser;
+  checkin: ICheckin;
   visibility: string;
 }
 
-export interface Photos {
+export interface IPhotos {
   count: number;
-  items: Item[];
+  items: IItem[];
   dupesRemoved: number;
 }
 
-export interface Response {
-  photos: Photos;
+export interface IResponse {
+  photos: IPhotos;
 }
 
-export interface VenuePhotos {
-  meta: Meta;
-  response: Response;
+export interface IVenuePhotos {
+  meta: IMeta;
+  response: IResponse;
 }
 
-export interface VenuePhotoLoadAction extends Action<typeof VENUE_PHOTOS> {
+export interface IVenuePhotoLoadAction extends Action<typeof VENUE_PHOTOS> {
   queryId: string;
 }
 
-export interface VenuePhotosSuccessAction
+export interface IVenuePhotosSuccessAction
   extends Action<typeof VENUE_PHOTOS_SUCCESS> {
-  data: VenuePhotos;
+  data: IVenuePhotos;
   id: string;
 }
 
-export interface VenuePhotosFailAction
+export interface IVenuePhotosFailAction
   extends Action<typeof VENUE_PHOTOS_FAIL> {
   error: { message: string };
 }
 
 export type VenueAction =
-  | VenuePhotoLoadAction
-  | VenuePhotosSuccessAction
-  | VenuePhotosFailAction;
+  | IVenuePhotoLoadAction
+  | IVenuePhotosSuccessAction
+  | IVenuePhotosFailAction;
 
 export interface IVenueState {
   isLoading?: boolean;
   error?: { message: string } | null;
-  photos?: { [key: string]: VenuePhotos };
+  photos?: { [key: string]: IVenuePhotos };
 }

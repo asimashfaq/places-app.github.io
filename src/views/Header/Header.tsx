@@ -1,6 +1,6 @@
 import React from "react";
-import Search from "../../modules/places/search/Search";
 import { Link } from "react-router-dom";
+import Search from "../../modules/places/search/Search";
 const Header:React.FC = () => {
   return (
     <>

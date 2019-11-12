@@ -1,18 +1,18 @@
-import React, { useState, useCallback, useEffect, useReducer } from "react";
-import _ from "lodash";
 import GoogleMapReact from "google-map-react";
+import _ from "lodash";
 import { parse } from "query-string";
-import { IPlacesListState, Item } from "./types";
+import React, { useCallback, useEffect, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Venue from "../venue/Venue";
-import { useSearchContext } from "../../context/SearchContext";
 import * as config from "../../config";
-import Marker from "./marker/Marker";
-import Warning from "../message/warnings";
-import ErrorMessage from "../message/errorMessage";
+import { useSearchContext } from "../../context/SearchContext";
 import Loader from "../loader/loader";
-import { MapReducer } from "./reducer";
+import ErrorMessage from "../message/errorMessage";
+import Warning from "../message/warnings";
+import Venue from "../venue/Venue";
 import { search } from "./action";
+import Marker from "./marker/Marker";
+import { MapReducer } from "./reducer";
+import { IItem, IPlacesListState } from "./types";
 
 let boxRefs: any = [];
 let refMarkers = [];
@@ -59,7 +59,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     });
   };
 
-  const _onMouseEnterContent = useCallback(
+  const onMouseEnterContent = useCallback(
     (e: any) => {
       const id = e.currentTarget.id as string;
       refMarkers[id].classList.remove("hide-all");
@@ -67,7 +67,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     [refMarkers]
   );
 
-  const _onMouseLeaveContent = useCallback(
+  const onMouseLeaveContent = useCallback(
     (e: any) => {
       const id = e.currentTarget.id;
       refMarkers[id].classList.add("hide-all");
@@ -76,7 +76,9 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
   );
   // Search for venue's
   useEffect(() => {
-    if (query.length < 1) return;
+    if (query.length < 1) {
+      return;
+    }
     markers = [];
     refMarkers = [];
     boxRefs = [];
@@ -85,17 +87,19 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
 
   // Stop the Loading Spinner
   React.useEffect(() => {
-    if (!isLoading) disptach({ type: "stoploader" });
+    if (!isLoading) {
+      disptach({ type: "stoploader" });
+    }
     console.log(data);
   }, [isLoading]);
 
   if (error) {
     const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
-    if (_.get(parseMessage, "meta", "").code == 429) {
+    if (_.get(parseMessage, "meta", "").code === 429) {
       errorMessage = parseMessage.meta.errorDetail;
     }
   } else if (_.get(data, "meta.code", "undefinded") === 200) {
-    data.response.groups[0].items.map((item: Item, index: any) => {
+    data.response.groups[0].items.map((item: IItem, index: any) => {
       markers[item.venue.id] = {
         data: {
           item,
@@ -141,32 +145,42 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
             <ErrorMessage code={429} message={errorMessage} />
           ) : (
             <div>
-              {_.get(data, "response.warning.text", "") && (
-                <Warning message={data.response.warning.text} />
-              )}
               {_.get(data, "response.groups", []).length > 0 ? (
                 <div>
-                  {data.response.groups[0].items.length > 0 ? (
-                    data.response.groups[0].items.map(
-                      (item: Item, index: any) => {
-                        return (
-                          <Venue
-                            onMouseEnter={_onMouseEnterContent}
-                            onMouseLeave={_onMouseLeaveContent}
-                            venue={item.venue}
-                            ref={input =>
-                              (boxRefs[`box-${item.venue.id}`] = input)
+                  {
+                    data.response.groups[0].items.length >= 1 ? (
+                    <div>
+                      <div>
+                        {data.response.groups[0].items.length === 1 && (
+                            <Warning message={data.response.warning.text} />
+                        )}
+                      </div>
+                      <div>
+                        {
+                          data.response.groups[0].items.map(
+                            (item: IItem, index: any) => {
+                              return (
+                                <Venue
+                                  onMouseEnter={onMouseEnterContent}
+                                  onMouseLeave={onMouseLeaveContent}
+                                  venue={item.venue}
+                                  ref={input =>
+                                    (boxRefs[`box-${item.venue.id}`] = input)
+                                  }
+                                  key={item.venue.id}
+                                />
+                              );
                             }
-                            key={item.venue.id}
-                          />
-                        );
-                      }
-                    )
+                          )
+                        }
+                      </div>
+                    </div>
                   ) : (
                     <div>
                       <Warning code={200} message={"No Venues Found"} />
                     </div>
-                  )}
+                  )
+                }
                 </div>
               ) : (
                 <div>

@@ -1,59 +1,60 @@
 import { Action } from "redux";
 
-export interface Meta {
+export interface IMeta {
   code: number;
   requestId: string;
 }
 
-export interface Filter {
+export interface IFilter {
   name: string;
   key: string;
 }
 
-export interface SuggestedFilters {
+export interface ISuggestedFilters {
   header: string;
-  filters: Filter[];
+  filters: IFilter[];
 }
 
-export interface Ne {
+export interface INe {
   lat: number;
   lng: number;
 }
 
-export interface Sw {
+export interface ISw {
   lat: number;
   lng: number;
 }
 
-export interface SuggestedBounds {
-  ne: Ne;
-  sw: Sw;
+export interface ISuggestedBounds {
+  ne: INe;
+  sw: ISw;
 }
 
-export interface Item2 {
+export interface IItem2 {
   summary: string;
   type: string;
   reasonName: string;
 }
 
-export interface Reasons {
+export interface IReasons {
   count: number;
-  items: Item2[];
+  items: IItem2[];
 }
 
-export interface Contact {}
+// tslint:disable-next-line: no-empty-interface
+export interface IContact {}
 
-export interface LabeledLatLng {
+export interface ILabeledLatLng {
   label: string;
   lat: number;
   lng: number;
 }
 
-export interface Location {
+export interface ILocation {
   address: string;
   lat: number;
   lng: number;
-  labeledLatLngs?: LabeledLatLng[];
+  labeledLatLngs?: ILabeledLatLng[];
   distance: number;
   cc: string;
   neighborhood?: string;
@@ -65,87 +66,87 @@ export interface Location {
   crossStreet?: string;
 }
 
-export interface Icon {
+export interface IIcon {
   prefix: string;
   suffix: string;
 }
 
-export interface Category {
+export interface ICategory {
   id: string;
   name: string;
   pluralName: string;
   shortName: string;
-  icon: Icon;
+  icon: IIcon;
   primary: boolean;
 }
 
-export interface Stats {
+export interface IStats {
   tipCount: number;
   usersCount: number;
   checkinsCount: number;
   visitsCount: number;
 }
 
-export interface BeenHere {
+export interface IBeenHere {
   count: number;
   lastCheckinExpiredAt: number;
   marked: boolean;
   unconfirmedCount: number;
 }
 
-export interface Photos {
+export interface IPhotos {
   count: number;
   groups: any[];
 }
 
-export interface HereNow {
+export interface IHereNow {
   count: number;
   summary: string;
   groups: any[];
 }
 
-export interface Venue {
+export interface IVenue {
   id: string;
   name: string;
-  contact: Contact;
-  location: Location;
-  categories: Category[];
+  contact: IContact;
+  location: ILocation;
+  categories: ICategory[];
   verified: boolean;
-  stats: Stats;
-  beenHere: BeenHere;
-  photos: Photos;
-  hereNow: HereNow;
+  stats: IStats;
+  beenHere: IBeenHere;
+  photos: IPhotos;
+  hereNow: IHereNow;
 }
 
-export interface Item {
-  reasons: Reasons;
-  venue: Venue;
+export interface IItem {
+  reasons: IReasons;
+  venue: IVenue;
   referralId: string;
 }
 
-export interface Group {
+export interface IGroup {
   type: string;
   name: string;
-  items: Item[];
+  items: IItem[];
 }
-export interface Warning {
+export interface IWarning {
   text: string;
 }
-export interface Response {
-  suggestedFilters: SuggestedFilters;
+export interface IResponse {
+  suggestedFilters: ISuggestedFilters;
   headerLocation: string;
   headerFullLocation: string;
   headerLocationGranularity: string;
   query: string;
   totalResults: number;
-  suggestedBounds: SuggestedBounds;
-  groups: Group[];
-  warning?: Warning;
+  suggestedBounds: ISuggestedBounds;
+  groups: IGroup[];
+  warning?: IWarning;
 }
 
 export interface IObject {
-  meta: Meta;
-  response: Response;
+  meta: IMeta;
+  response: IResponse;
 }
 
 export interface IPagingProps {

@@ -8,7 +8,7 @@ export const getSearchResults = async (
   useFakeData: boolean = false
 ) => {
   if (useFakeData) {
-    return new Promise(function(resolve) {
+    return new Promise(resolve => {
       setTimeout(() => resolve({ data: fakeData.locations }), 3000);
     });
   } else {
@@ -21,7 +21,7 @@ export const getSearchResults = async (
             v: "20180323",
             ll: `${lat},${lng}`,
             limit: 15,
-            query: query,
+            query,
             radius: 5049,
             llAcc: 1000
           }
@@ -35,7 +35,7 @@ export const getSearchResults = async (
           return Promise.reject(new Error(JSON.stringify(err.response.data)));
         });
 
-      return new Promise(function(resolve) {
+      return new Promise(resolve => {
         return resolve({ data: result.data });
       });
     } catch (e) {
@@ -50,7 +50,7 @@ export const getvenuePicResults = async (
 ) => {
   if (useFakeData) {
     if (fakeData.photos[queryId]) {
-      return new Promise(function(resolve) {
+      return new Promise(resolve => {
         setTimeout(() => {
           return resolve({ data: fakeData.photos[queryId as string] });
         }, 100);
@@ -78,7 +78,7 @@ export const getvenuePicResults = async (
           }
           return Promise.reject(new Error(JSON.stringify(err.response.data)));
         });
-      return new Promise(function(resolve) {
+      return new Promise(resolve => {
         return resolve({ data: result.data });
       });
     } catch (e) {

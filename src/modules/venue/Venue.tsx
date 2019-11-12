@@ -1,13 +1,13 @@
-import React from "react";
 import _ from "lodash";
-import { Venue as IVenue, Category } from "../places/types";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { venuePhotosLoad } from "./action";
-import { IVenueState, Item } from "./types";
 import { useSearchContext } from "../../context/SearchContext";
 import PlaceHolder from "../placeholder/placeholder";
+import { ICategory, IVenue as IVenue } from "../places/types";
+import { venuePhotosLoad } from "./action";
+import { IItem, IVenueState } from "./types";
 
-interface Props {
+interface IProps {
   venue: IVenue;
   onMouseEnter: any;
   onMouseLeave: any;
@@ -15,7 +15,7 @@ interface Props {
 export type Ref = any;
 
 const Venue = React.memo(
-  React.forwardRef<Ref, Props>((props, ref) => {
+  React.forwardRef<Ref, IProps>((props, ref) => {
     let errorMessage;
     const { query } = useSearchContext();
     const dispatch = useDispatch();
@@ -30,12 +30,12 @@ const Venue = React.memo(
     ) as IVenueState;
 
     React.useEffect(() => {
-      if (!props.venue.id || query.length < 1) return;
+      if (!props.venue.id || query.length < 1) { return; }
       dispatch(venuePhotosLoad(props.venue.id));
     }, [props.venue.id, dispatch]);
     if (error) {
       const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
-      if (_.get(parseMessage, "meta", "").code == 429) {
+      if (_.get(parseMessage, "meta", "").code === 429) {
         errorMessage = parseMessage.meta.errorDetail;
       }
     }
@@ -57,7 +57,7 @@ const Venue = React.memo(
           </div>
           <div>
             {_.get(props, "venue.categories", []).map(
-              (category: Category, index: number) => {
+              (category: ICategory, index: number) => {
                 return (
                   <button
                     key={`${category.id},${index}`}
@@ -74,11 +74,11 @@ const Venue = React.memo(
           className="ml-2 w-16 h-full w-3/6 min-h-full flex"
           style={{ minHeight: "200px" }}
         >
-          {isLoading == false && error == null ? (
+          {isLoading === false && error === null ? (
             _.get(photos[props.venue.id], "response.photos.items", []).length >
             0 ? (
               photos[props.venue.id].response.photos.items.map(
-                (photo: Item, index: number) => {
+                (photo: IItem, index: number) => {
                   return (
                     <div
                       key={`${props.venue.id},${index}`}

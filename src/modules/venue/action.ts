@@ -4,21 +4,21 @@ import {
   VENUE_PHOTOS_SUCCESS
 } from "./constants";
 import {
-  VenuePhotoLoadAction,
-  VenuePhotos,
-  VenuePhotosFailAction,
-  VenuePhotosSuccessAction
+  IVenuePhotoLoadAction,
+  IVenuePhotos,
+  IVenuePhotosFailAction,
+  IVenuePhotosSuccessAction
 } from "./types";
 
-export const venuePhotosLoad = (queryId: string): VenuePhotoLoadAction => ({
+export const venuePhotosLoad = (queryId: string): IVenuePhotoLoadAction => ({
   type: VENUE_PHOTOS,
   queryId
 });
 
 export const venuePhotosSuccess = (
-  data: VenuePhotos,
+  data: IVenuePhotos,
   id: string
-): VenuePhotosSuccessAction => ({
+): IVenuePhotosSuccessAction => ({
   type: VENUE_PHOTOS_SUCCESS,
   data,
   id
@@ -26,7 +26,7 @@ export const venuePhotosSuccess = (
 
 export const venuePhotosFail = (error: {
   message: string;
-}): VenuePhotosFailAction => ({
+}): IVenuePhotosFailAction => ({
   type: VENUE_PHOTOS_FAIL,
   error
 });

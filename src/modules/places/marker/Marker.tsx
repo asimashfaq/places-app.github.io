@@ -1,18 +1,19 @@
-import React from "react";
 import _ from "lodash";
+import React from "react";
 export type Ref = any;
 
 const Marker = React.forwardRef((props: any, ref: Ref) => {
-  const _onMouseEnterContent = (e:any) => {
+  const onMouseEnterContent = (e:any) => {
     props.aref.classList.add("bg-gray-300");
   };
 
-  const _onMouseLeaveContent = () => {
-    props.aref.classList.contains("bg-gray-300") &&
+  const onMouseLeaveContent = () => {
+    if(props.aref.classList.contains("bg-gray-300")){
       props.aref.classList.remove("bg-gray-300");
+    }
   };
 
-  let photoItem = _.get(props, "data.photo.response.photos.items", [])[0];
+  const photoItem = _.get(props, "data.photo.response.photos.items", [])[0];
   return (
     <>
       <div
@@ -50,15 +51,15 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
         </div>
 
         <div
-          onMouseEnter={_onMouseEnterContent}
-          onMouseLeave={_onMouseLeaveContent}
+          onMouseEnter={onMouseEnterContent}
+          onMouseLeave={onMouseLeaveContent}
           className="red-pin h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
         ></div>
 
         <div
           className="blue-pin h-8 w-8 bg-cover pt-1 absolute bottom-0 pin"
-          onMouseEnter={_onMouseEnterContent}
-          onMouseLeave={_onMouseLeaveContent}
+          onMouseEnter={onMouseEnterContent}
+          onMouseLeave={onMouseLeaveContent}
         ></div>
       </div>
     </>

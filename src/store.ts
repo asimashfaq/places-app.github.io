@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 const w: any = window as any;
 
 const epicMiddleware = createEpicMiddleware();
-let middlewares = [applyMiddleware(epicMiddleware)];
+const middlewares = [applyMiddleware(epicMiddleware)];
 
 if (process.env.NODE_ENV === "development") {
   middlewares.push(
