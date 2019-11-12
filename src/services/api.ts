@@ -13,18 +13,22 @@ export const getSearchResults = async (
     });
   } else {
     try {
-      const result = await axios.get("/venues/explore", {
-        params: {
-          client_id: config.CLIENT_ID,
-          client_secret: config.CLIENT_SECRET,
-          v: "20180323",
-          ll: `${lat},${lng}`,
-          limit: 15,
-          query: query,
-          radius: 5049,
-          llAcc: 1000
-        }
-      });
+      const result = await axios
+        .get("/venues/explore", {
+          params: {
+            client_id: config.CLIENT_ID,
+            client_secret: config.CLIENT_SECRET,
+            v: "20180323",
+            ll: `${lat},${lng}`,
+            limit: 15,
+            query: query,
+            radius: 50049,
+            llAcc: 1000
+          }
+        })
+        .catch((err: any) => {
+          return Promise.reject(new Error(JSON.stringify(err.response.data)));
+        });
 
       return new Promise(function(resolve) {
         return resolve({ data: result.data });

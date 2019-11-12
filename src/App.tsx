@@ -1,8 +1,7 @@
 import React from "react";
-import { Container } from "reactstrap";
 import { SearchProvider } from "./context/SearchContext";
 import Places from "./modules/places/Places";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
@@ -22,7 +21,9 @@ function App() {
                     <Header />
                   </div>
                 </div>
-                  <Places />
+                  <Switch>
+                    <Route path="/" component={Places}></Route>
+                  </Switch>
                 </SearchProvider>
               </div>
             </div>

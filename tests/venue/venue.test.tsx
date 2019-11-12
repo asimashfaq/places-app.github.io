@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 import { venuePhotoEpic } from "../../src/modules/venue/epics";
 import { createEpicMiddleware } from "redux-observable";
 import * as SearchContext from "../../src/context/SearchContext";
-import * as ReactReduxHooks from "../../src/hooks/react-redux";
 
 const createState = (initialState: any) => (actions: any) => {
   return {
@@ -37,7 +36,7 @@ describe("venue view", () => {
 
     wrapper = mount(
       <Provider store={store}>
-        <Venue venue={venues.response.groups[0].items[1].venue} />
+        <Venue venue={venues.response.groups[0].items[1].venue}  onMouseLeave={()=>{}} onMouseEnter={()=>{}}/>
       </Provider>
     );
   });

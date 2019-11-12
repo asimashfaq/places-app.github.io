@@ -128,7 +128,9 @@ export interface Group {
   name: string;
   items: Item[];
 }
-
+export interface Warning {
+  text: string;
+}
 export interface Response {
   suggestedFilters: SuggestedFilters;
   headerLocation: string;
@@ -138,6 +140,7 @@ export interface Response {
   totalResults: number;
   suggestedBounds: SuggestedBounds;
   groups: Group[];
+  warning?: Warning;
 }
 
 export interface IObject {

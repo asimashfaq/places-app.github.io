@@ -23,7 +23,7 @@ const PlaceSearch: React.FC = () => {
     event.preventDefault();
     if (value.length < 3) {
       setShowError(true);
-      return false;
+      return event.stopPropagation();
     } else {
       setShowError(false);
       updateQuery(value);

@@ -1,6 +1,6 @@
 import nock from "nock";
-import * as config from "../config";
-import * as api from "./api";
+import * as config from "../../src/config";
+import * as api from "../../src/services/api";
 describe("api test", () => {
   it("should return the venue photos", async () => {
     const expected = {

@@ -11,7 +11,7 @@
       "lib": ["es5", "es6", "dom"]
   },
   "include": [
-      "./src/**/*", "tests/venue/reducer.test.ts", "tests/venue/action.test.ts", "tests/venue/epic.test.ts"
+      "./src/**/*", "tests/venue/reducer.test.ts", "tests/venue/action.test.ts", "tests/venue/epic.test.ts", "tests/services/api.test.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
       "reportFiles": [
