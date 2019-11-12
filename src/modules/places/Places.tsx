@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Spinner } from "reactstrap";
+
 import _ from "lodash";
 import GoogleMapReact, { ChangeEventValue } from "google-map-react";
 import { parse } from "query-string";
@@ -26,7 +26,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     zoom: 10
   };
 
-  let result: any;
+  let errorMessage: any;
 
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
@@ -51,20 +51,28 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     // dispatch(search(query,lat,lng));
   };
 
-  const _onMouseEnterContent = useCallback((e: any) => {
-    const id = e.currentTarget.id as string;
-    refMarkers[id].classList.remove("hide-all");
-  },[refMarkers]);
+  const _onMouseEnterContent = useCallback(
+    (e: any) => {
+      const id = e.currentTarget.id as string;
+      refMarkers[id].classList.remove("hide-all");
+    },
+    [refMarkers]
+  );
 
-  const _onMouseLeaveContent = useCallback((e: any) => {
-    const id = e.currentTarget.id;
-    refMarkers[id].classList.add("hide-all");
-  },[refMarkers]);
+  const _onMouseLeaveContent = useCallback(
+    (e: any) => {
+      const id = e.currentTarget.id;
+      refMarkers[id].classList.add("hide-all");
+    },
+    [refMarkers]
+  );
 
   const handleRef = useCallback(
     (input: any, item) => {
       boxRefs[`box-${item.venue.id}`] = input;
-    },[boxRefs])
+    },
+    [boxRefs]
+  );
   React.useEffect(() => {
     if (query.length < 1) return;
     markers = [];
@@ -76,57 +84,23 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
   React.useEffect(() => {
     if (!isLoading) setLoader(false);
   }, [_.get(data, "response", "undefined"), isLoading]);
-  if (isLoading) {
-    result = <Spinner />;
-  } else if (error) {
+  if (error) {
     const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
     if (_.get(parseMessage, "meta", "").code == 429) {
-      result = (
-        <div
-          className="lg:w-3/4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-          role="alert"
-        >
-          <strong className="font-bold">Code: 429!</strong>
-          <span className="block sm:inline">
-            {parseMessage.meta.errorDetail}
-          </span>
-          <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg
-              className="fill-current h-6 w-6 text-red-500"
-              role="button"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <title>Close</title>
-              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-            </svg>
-          </span>
-        </div>
-      );
+      errorMessage = parseMessage.meta.errorDetail;
     }
   } else if (_.get(data, "meta.code", "undefinded") === 200) {
-    if (data.response.groups[0].items.length > 0) {
-      result = data.response.groups[0].items.map((item: Item, index: any) => {
-        markers[item.venue.id] = {
-          data: {
-            item,
-            photo: photo.photos[item.venue.id]
-          },
-          Lat: item.venue.location.lat,
-          Lng: item.venue.location.lng,
-          visible: false
-        };
-        return (
-          <Venue
-            onMouseEnter={(_onMouseEnterContent)}
-            onMouseLeave={(_onMouseLeaveContent)}
-            venue={item.venue}
-            ref={(input) => handleRef(input,item)}
-            key={item.venue.id}
-          />
-        );
-      });
-    }
+    data.response.groups[0].items.map((item: Item, index: any) => {
+      markers[item.venue.id] = {
+        data: {
+          item,
+          photo: photo.photos[item.venue.id]
+        },
+        Lat: item.venue.location.lat,
+        Lng: item.venue.location.lng,
+        visible: false
+      };
+    });
   }
   return (
     <div className="flex flex-col flex-1 lg:flex-row bg-secondary map-wrapper">
@@ -180,7 +154,41 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
               </span>
             </div>
           )}
-          {result}
+          {_.get(data, "response.groups", []).length > 0 ? (
+            data.response.groups[0].items.map((item: Item, index: any) => {
+              return (
+                <Venue
+                  onMouseEnter={_onMouseEnterContent}
+                  onMouseLeave={_onMouseLeaveContent}
+                  venue={item.venue}
+                  ref={input => handleRef(input, item)}
+                  key={item.venue.id}
+                />
+              );
+            })
+          ) : (
+            <div></div>
+          )}
+          {errorMessage && (
+            <div
+              className="lg:w-3/4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <strong className="font-bold">Code: 429!</strong>
+              <span className="block sm:inline">{errorMessage}</span>
+              <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
+          )}
         </div>
         <div
           className={`absolute top-0 left-0 absolutely-center hide-loader ${
