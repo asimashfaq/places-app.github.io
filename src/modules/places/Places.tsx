@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Spinner } from "reactstrap";
 import _ from "lodash";
 import GoogleMapReact, { ChangeEventValue } from "google-map-react";
@@ -14,10 +14,9 @@ import Marker from "./marker/Marker";
 let boxRefs: any = [];
 let refMarkers = [];
 
-
 const Places: React.FC<{ location: any }> = ({ location }) => {
   let markers = [];
-  config.UseFakeData(true);
+  //config.UseFakeData(true);
   const params = parse(location.search);
   const gprops = {
     center: {
@@ -27,7 +26,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     zoom: 10
   };
 
-  let result:any;
+  let result: any;
 
   const { query } = useSearchContext();
   const [lat, setLat] = useState(gprops.center.lat);
@@ -52,16 +51,20 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     // dispatch(search(query,lat,lng));
   };
 
-  const _onMouseEnterContent = (e: any) => {
+  const _onMouseEnterContent = useCallback((e: any) => {
     const id = e.currentTarget.id as string;
     refMarkers[id].classList.remove("hide-all");
-  };
+  },[refMarkers]);
 
-  const _onMouseLeaveContent = (e: any) => {
+  const _onMouseLeaveContent = useCallback((e: any) => {
     const id = e.currentTarget.id;
     refMarkers[id].classList.add("hide-all");
-  };
+  },[refMarkers]);
 
+  const handleRef = useCallback(
+    (input: any, item) => {
+      boxRefs[`box-${item.venue.id}`] = input;
+    },[boxRefs])
   React.useEffect(() => {
     if (query.length < 1) return;
     markers = [];
@@ -76,22 +79,32 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
   if (isLoading) {
     result = <Spinner />;
   } else if (error) {
-      const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
-      if(_.get(parseMessage,'meta','').code == 429){
-      result =(
-        <div className="lg:w-3/4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
+    if (_.get(parseMessage, "meta", "").code == 429) {
+      result = (
+        <div
+          className="lg:w-3/4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
           <strong className="font-bold">Code: 429!</strong>
-          <span className="block sm:inline">{parseMessage.meta.errorDetail}</span>
+          <span className="block sm:inline">
+            {parseMessage.meta.errorDetail}
+          </span>
           <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-            <svg className="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            <svg
+              className="fill-current h-6 w-6 text-red-500"
+              role="button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <title>Close</title>
+              <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+            </svg>
           </span>
         </div>
-      )
-      }
-    
+      );
+    }
   } else if (_.get(data, "meta.code", "undefinded") === 200) {
-   
-    
     if (data.response.groups[0].items.length > 0) {
       result = data.response.groups[0].items.map((item: Item, index: any) => {
         markers[item.venue.id] = {
@@ -105,12 +118,10 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
         };
         return (
           <Venue
-            onMouseEnter={_onMouseEnterContent}
-            onMouseLeave={_onMouseLeaveContent}
+            onMouseEnter={(_onMouseEnterContent)}
+            onMouseLeave={(_onMouseLeaveContent)}
             venue={item.venue}
-            ref={(input: any) => {
-              boxRefs[`box-${item.venue.id}`] = input;
-            }}
+            ref={(input) => handleRef(input,item)}
             key={item.venue.id}
           />
         );
@@ -146,17 +157,28 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
         </GoogleMapReact>
       </div>
       <div className="overflow-auto w-full lg:w-1/3 bg-white relative">
-        <div
-          className="w-full move-right bg-white"
-        >
-          {_.get(data,'response.warning.text','') && (
-             <div className="lg:w-11/12 margin-auto bg-yellow-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="warning">
-             <strong className="font-bold">Warning!</strong>
-             <span className="block sm:inline">{data.response.warning.text}</span>
-             <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-               <svg className="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-             </span>
-           </div>
+        <div className="w-full move-right bg-white">
+          {_.get(data, "response.warning.text", "") && (
+            <div
+              className="lg:w-11/12 margin-auto bg-yellow-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              role="warning"
+            >
+              <strong className="font-bold">Warning!</strong>
+              <span className="block sm:inline">
+                {data.response.warning.text}
+              </span>
+              <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
           )}
           {result}
         </div>
