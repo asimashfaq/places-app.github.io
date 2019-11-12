@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from "react";
-
 import _ from "lodash";
 import GoogleMapReact, { ChangeEventValue } from "google-map-react";
 import { parse } from "query-string";
@@ -19,7 +18,7 @@ let refMarkers = [];
 
 const Places: React.FC<{ location: any }> = ({ location }) => {
   let markers = [];
-  //config.UseFakeData(true);
+  config.UseFakeData(true);
   const params = parse(location.search);
   const gprops = {
     center: {
@@ -70,12 +69,6 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
     [refMarkers]
   );
 
-  const handleRef = useCallback(
-    (input: any, item) => {
-      boxRefs[`box-${item.venue.id}`] = input;
-    },
-    [boxRefs]
-  );
   React.useEffect(() => {
     if (query.length < 1) return;
     markers = [];
@@ -149,7 +142,7 @@ const Places: React.FC<{ location: any }> = ({ location }) => {
                       onMouseEnter={_onMouseEnterContent}
                       onMouseLeave={_onMouseLeaveContent}
                       venue={item.venue}
-                      ref={input => handleRef(input, item)}
+                      ref={input => boxRefs[`box-${item.venue.id}`] = input}
                       key={item.venue.id}
                     />
                   );

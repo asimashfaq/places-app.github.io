@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { venuePhotosLoad } from "./action";
 import { IVenueState, Item } from "./types";
 import { useSearchContext } from "../../context/SearchContext";
+import PlaceHolder from "../placeholder/placeholder";
 
 interface Props {
   venue: IVenue;
@@ -35,7 +36,7 @@ const Venue = React.memo(
     if (error) {
       const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
       if (_.get(parseMessage, "meta", "").code == 429) {
-        errorMessage = parseMessage.meta.errorDetail
+        errorMessage = parseMessage.meta.errorDetail;
       }
     }
 
@@ -90,35 +91,14 @@ const Venue = React.memo(
                 }
               )
             ) : (
-              <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
-                <p className="noImage m-auto text-gray-600">No Image</p>
-              </div>
+              <PlaceHolder loader={false}>No Image</PlaceHolder>
             )
           ) : error != null ? (
-            <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
-              <div className="noImage m-auto text-gray-600">
-                <div>{errorMessage}</div>
-              </div>
-            </div>
+            <PlaceHolder>
+              <div>{errorMessage}</div>
+            </PlaceHolder>
           ) : (
-            <div className="flex-1 min-h-full bg-cover bg-gray-300 rounded-sm bg-center flex">
-              <div className="noImage m-auto text-gray-600">
-                <div className="lds-default">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
-            </div>
+            <PlaceHolder loader={true} />
           )}
         </div>
       </div>

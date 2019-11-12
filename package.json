@@ -26,7 +26,6 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "reactstrap": "^8.1.1",
     "redux-mock-store": "^1.5.3",
     "redux-observable": "^1.2.0",
     "redux-persist": "^6.0.0",
@@ -48,7 +47,7 @@
     "start": "npm run start-dev",
     "start-dev": "webpack-dev-server --open --mode development --config=configs/webpack/dev.js",
     "start-prod": "npm run build && node express.js",
-    "test": "NODE_ENV=test && jest  --coverage --config=configs/jest.json",
+    "test": "NODE_ENV=test && jest  --coverage  --watchAll --config=configs/jest.json",
     "test:watch": "NODE_ENV=test && jest --watch --coverage --config=configs/jest.json",
     "deploy": "gh-pages -d dist"
   },
