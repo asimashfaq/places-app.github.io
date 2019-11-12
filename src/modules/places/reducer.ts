@@ -2,7 +2,7 @@ import { Reducer } from "redux";
 import { IPlacesListState, TAction } from "./types";
 
 const initialState: IPlacesListState = {
-  isLoading: false,
+  isLoading: true,
   data: undefined,
   error: null
 };
@@ -22,5 +22,25 @@ const reducer: Reducer<IPlacesListState, TAction> = (
       return state;
   }
 };
-
+export const MapReducer = (state, action) => {
+  switch (action.type) {
+    case "init":
+      return action.payload;
+    case "change":
+      return {
+        ...state,
+        lat: action.payload.lat,
+        lng: action.payload.lng,
+        loader: true
+      };
+    case "stoploader":
+      return {
+        ...state,
+        loader: false
+      };
+    default: {
+      return state;
+    }
+  }
+};
 export default reducer;

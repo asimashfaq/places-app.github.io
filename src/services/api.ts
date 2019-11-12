@@ -9,7 +9,7 @@ export const getSearchResults = async (
 ) => {
   if (useFakeData) {
     return new Promise(function(resolve) {
-      setTimeout(() => resolve({ data: fakeData.locations }), 300);
+      setTimeout(() => resolve({ data: fakeData.locations }), 3000);
     });
   } else {
     try {
@@ -53,7 +53,7 @@ export const getvenuePicResults = async (
       return new Promise(function(resolve) {
         setTimeout(() => {
           return resolve({ data: fakeData.photos[queryId as string] });
-        }, 5000);
+        }, 100);
       });
     } else {
       return Promise.reject(

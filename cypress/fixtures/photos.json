@@ -1,0 +1,144 @@
+{
+  "557c3971498ec5857dd9bdf4": {
+    "meta": { "code": 200, "requestId": "5dc4e79cfd16bb0039917908" },
+    "response": {
+      "photos": {
+        "count": 1,
+        "items": [
+          {
+            "id": "59c65407db1d8114b5cbd253",
+            "createdAt": 1506169863,
+            "source": { "name": "Swarm for iOS", "url": "https://www.swarmapp.com" },
+            "prefix": "https://fastly.4sqi.net/img/general/",
+            "suffix": "/56942_w_ZJ6vw0Yi6FaFsC7o0hXPM-kg_vmRcaN-wf_OPg7fU.jpg",
+            "width": 1440,
+            "height": 1920,
+            "user": {
+              "id": "56942",
+              "firstName": "James",
+              "lastName": "Head",
+              "gender": "male",
+              "photo": { "prefix": "https://fastly.4sqi.net/img/user/", "suffix": "/56942_1255001564584.jpg" }
+            },
+            "checkin": { "id": "59c6540593bd637b669b6eba", "createdAt": 1506169861, "type": "checkin", "timeZoneOffset": 60 },
+            "visibility": "public"
+          }
+        ],
+        "dupesRemoved": 0
+      }
+    }
+  },
+  "4d6e665a30d5b1f735a7c642": {
+    "meta": { "code": 200, "requestId": "5dc4e97ba4b51b002c7fe6c1" },
+    "response": {
+      "photos": {
+        "count": 1,
+        "items": [
+          {
+            "id": "501d138fe4b0f873f7e9f3d4",
+            "createdAt": 1344082831,
+            "source": { "name": "Foursquare for iOS", "url": "https://foursquare.com/download/#/iphone" },
+            "prefix": "https://fastly.4sqi.net/img/general/",
+            "suffix": "/ljcP9VHoVEHbRaUp5xP2lPKjAUxJ4o-XjwaJd-3qHEA.jpg",
+            "width": 405,
+            "height": 540,
+            "user": {
+              "id": "2395669",
+              "firstName": "Benson",
+              "lastName": "Hunter",
+              "gender": "male",
+              "photo": { "prefix": "https://fastly.4sqi.net/img/user/", "suffix": "/2395669-3JNE0PHJX0F4GPBN.jpg" }
+            },
+            "checkin": { "id": "501d137ae4b0cf97af6c2ddd", "createdAt": 1344082810, "type": "checkin", "timeZoneOffset": 60 },
+            "visibility": "public"
+          }
+        ],
+        "dupesRemoved": 0
+      }
+    }
+  },
+  "573dc572498ed0f35f4f4902": {
+    "meta": { "code": 200, "requestId": "5dc4e9a9fd16bb0039976557" },
+    "response": {
+      "photos": {
+        "count": 1,
+        "items": [
+          {
+            "id": "5b1d098d029a55002cfe0145",
+            "createdAt": 1528629645,
+            "source": { "name": "Swarm for iOS", "url": "https://www.swarmapp.com" },
+            "prefix": "https://fastly.4sqi.net/img/general/",
+            "suffix": "/2825902_5Sul6ZGCg4z31dwvd8QcnlZ2M_4lRdHoZFbXTd1AIow.jpg",
+            "width": 1920,
+            "height": 1440,
+            "user": {
+              "id": "2825902",
+              "firstName": "Paul",
+              "lastName": "Anderson-Foster",
+              "gender": "male",
+              "photo": {
+                "prefix": "https://fastly.4sqi.net/img/user/",
+                "suffix": "/2825902_pp47pE55_rRQsR7EL5Oax7O-UL3JPqdgm2lXNF9UJdLoTe8BIcnH8mi5ijpOspqBwylW2bqC8.jpg"
+              }
+            },
+            "checkin": {
+              "id": "5b1d0943446ea6002c2a1c46",
+              "createdAt": 1528629571,
+              "type": "checkin",
+              "timeZoneOffset": 60,
+              "with": [
+                {
+                  "id": "210512",
+                  "firstName": "Mark",
+                  "lastName": "Anderson",
+                  "gender": "male",
+                  "photo": {
+                    "prefix": "https://fastly.4sqi.net/img/user/",
+                    "suffix": "/210512_bZ0sE1sN_KprzeeHpAyCJ_Ps1HoOOfqHYZ575soHqqJ2bKQ0RJKOuy35zyDxeKP4AFNv2y7eJ.jpg"
+                  }
+                }
+              ]
+            },
+            "visibility": "public"
+          }
+        ],
+        "dupesRemoved": 0
+      }
+    }
+  },
+  "5b8acea3ea1e44002c513bea": {
+    "meta": { "code": 200, "requestId": "5dc4e9efcc7d41002b8d325c" },
+    "response": { "photos": { "count": 0, "items": [], "dupesRemoved": 0 } }
+  },
+  "5a82a793c97f285a363851db": {
+    "meta": { "code": 200, "requestId": "5dc4ebc26001bc002b8bf0c4" },
+    "response": {
+      "photos": {
+        "count": 1,
+        "items": [
+          {
+            "id": "5d1de5d372590d00308c3e89",
+            "createdAt": 1562240467,
+            "source": { "name": "Swarm for iOS", "url": "https://www.swarmapp.com" },
+            "prefix": "https://fastly.4sqi.net/img/general/",
+            "suffix": "/46463026_F41MqiYuaxGmN-o7TkcmLIGGo55e2uJ7_Gado6J-yxo.jpg",
+            "width": 1920,
+            "height": 1440,
+            "user": {
+              "id": "46463026",
+              "firstName": "Paula C.",
+              "gender": "female",
+              "photo": {
+                "prefix": "https://fastly.4sqi.net/img/user/",
+                "suffix": "/46463026_fDcvYyCW_v03JpeRGJvJMh-hVXI8GixJmpGukTncPOAQZMNa8nAL7Cv0CXulkMH9XWWDXegn2.jpg"
+              }
+            },
+            "checkin": { "id": "5d1de5d15e620c00070e29fe", "createdAt": 1562240465, "type": "checkin", "timeZoneOffset": 60 },
+            "visibility": "public"
+          }
+        ],
+        "dupesRemoved": 0
+      }
+    }
+  }
+}

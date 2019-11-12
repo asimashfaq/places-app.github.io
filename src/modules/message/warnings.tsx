@@ -3,11 +3,11 @@ import React from "react";
 const Warning = props => {
   return (
     <div
-      className="lg:w-11/12 margin-auto bg-yellow-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      className="warningMsg lg:w-11/12 margin-auto bg-yellow-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
       role="warning"
     >
-      <strong className="font-bold">Warning!</strong>
-      <span className="block sm:inline">{props.message}</span>
+      <strong className="font-bold">Warning! </strong>
+      <span className="block sm:inline"> {props.message}</span>
       <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
         <svg
           className="fill-current h-6 w-6 text-red-500"
