@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _get  from 'lodash/get';
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchContext } from "../../context/SearchContext";
@@ -34,8 +34,8 @@ const Venue = React.memo(
       dispatch(venuePhotosLoad(props.venue.id));
     }, [props.venue.id, dispatch]);
     if (error) {
-      const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
-      if (_.get(parseMessage, "meta", "").code === 429) {
+      const parseMessage: any = JSON.parse(_get(error, "message", "{}"));
+      if (_get(parseMessage, "meta", "").code === 429) {
         errorMessage = parseMessage.meta.errorDetail;
       }
     }
@@ -56,7 +56,7 @@ const Venue = React.memo(
             {props.venue.location.formattedAddress}
           </div>
           <div>
-            {_.get(props, "venue.categories", []).map(
+            {_get(props, "venue.categories", []).map(
               (category: ICategory, index: number) => {
                 return (
                   <button
@@ -75,7 +75,7 @@ const Venue = React.memo(
           style={{ minHeight: "200px" }}
         >
           {isLoading === false && error === null ? (
-            _.get(photos[props.venue.id], "response.photos.items", []).length >
+            _get(photos[props.venue.id], "response.photos.items", []).length >
             0 ? (
               photos[props.venue.id].response.photos.items.map(
                 (photo: IItem, index: number) => {

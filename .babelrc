@@ -1,10 +1,23 @@
 {
     "presets": [
       ["@babel/preset-env", {"modules": false}],
-      "@babel/preset-react"
+      "@babel/preset-react",
+      ["env", {
+          "modules": false
+      }]
     ],
     "plugins": [
-      "react-hot-loader/babel"
+      "react-hot-loader/babel",
+      ["transform-imports", {
+        "react-bootstrap": {
+          "transform": "react-bootstrap/lib/${member}",
+          "preventFullImport": true
+        },
+        "lodash": {
+          "transform": "lodash/${member}",
+          "preventFullImport": true
+        }
+      }]
     ],
     "env": {
       "production": {

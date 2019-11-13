@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _get from "lodash/get";
 import React from "react";
 export type Ref = any;
 
@@ -13,7 +13,7 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
     }
   };
 
-  const photoItem = _.get(props, "data.photo.response.photos.items", [])[0];
+  const photoItem = _get(props, "data.photo.response.photos.items", [])[0];
   return (
     <>
       <div
@@ -33,7 +33,7 @@ const Marker = React.forwardRef((props: any, ref: Ref) => {
             ></div>
           )}
           <div className="mt-3 text-sm">
-            {_.get(props, "data.item.venue.location.formattedAddress", []).map(
+            {_get(props, "data.item.venue.location.formattedAddress", []).map(
               (item, index) => {
                 return (
                   <div

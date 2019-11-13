@@ -1,6 +1,5 @@
 import GoogleMapReact from "google-map-react";
-import _ from "lodash";
-import { parse } from "query-string";
+import _get from "lodash/get";
 import React, { useCallback, useEffect, useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as config from "../../config";
@@ -16,15 +15,23 @@ import { IItem, IPlacesListState } from "./types";
 
 let boxRefs: any = [];
 let refMarkers = [];
-interface IProps{
-   fake:string
-   lat:number
-   lng:number
+interface IProps {
+  fake: string;
+  lat: number;
+  lng: number;
 }
-const Places: React.FC<IProps> = ({fake,lat,lng}:{fake:string,lat:number,lng:number}) => {
+const Places: React.FC<IProps> = ({
+  fake,
+  lat,
+  lng
+}: {
+  fake: string;
+  lat: number;
+  lng: number;
+}) => {
   let markers = [];
 
-  config.UseFakeData(fake=== "true" || false);
+  config.UseFakeData(fake === "true" || false);
   const gprops = {
     center: {
       lat: lat || config.LAT,
@@ -88,20 +95,12 @@ const Places: React.FC<IProps> = ({fake,lat,lng}:{fake:string,lat:number,lng:num
     storedispatch(search(query, state.lat, state.lng));
   }, [query, state.lat, state.lng, storedispatch]);
 
-  // Stop the Loading Spinner
-  React.useEffect(() => {
-    if (!isLoading) {
-      disptach({ type: "stoploader" });
-    }
-    console.log(data);
-  }, [isLoading]);
-
   if (error) {
-    const parseMessage: any = JSON.parse(_.get(error, "message", "{}"));
-    if (_.get(parseMessage, "meta", "").code === 429) {
+    const parseMessage: any = JSON.parse(_get(error, "message", "{}"));
+    if (_get(parseMessage, "meta", "").code === 429) {
       errorMessage = parseMessage.meta.errorDetail;
     }
-  } else if (_.get(data, "meta.code", "undefinded") === 200) {
+  } else if (_get(data, "meta.code", "undefinded") === 200) {
     data.response.groups[0].items.map((item: IItem, index: any) => {
       markers[item.venue.id] = {
         data: {
@@ -144,56 +143,52 @@ const Places: React.FC<IProps> = ({fake,lat,lng}:{fake:string,lat:number,lng:num
       </div>
       <div className="overflow-auto w-full lg:w-1/3 bg-white relative">
         <div className="w-full move-right bg-white">
-          {errorMessage !== undefined ? (
+          { errorMessage !== undefined ? (
             <ErrorMessage code={429} message={errorMessage} />
           ) : (
             <div>
-              {_.get(data, "response.groups", []).length > 0 ? (
+              { _get(data, "response.groups", []).length > 0 ? (
                 <div>
-                  {
-                    data.response.groups[0].items.length >= 1 ? (
+                  {data.response.groups[0].items.length >= 1 ? (
                     <div>
                       <div>
                         {data.response.groups[0].items.length === 1 && (
-                            <Warning message={data.response.warning.text} />
+                          <Warning message={data.response.warning.text} />
                         )}
                       </div>
                       <div>
-                        {
-                          data.response.groups[0].items.map(
-                            (item: IItem, index: any) => {
-                              return (
-                                <Venue
-                                  onMouseEnter={onMouseEnterContent}
-                                  onMouseLeave={onMouseLeaveContent}
-                                  venue={item.venue}
-                                  ref={input =>
-                                    (boxRefs[`box-${item.venue.id}`] = input)
-                                  }
-                                  key={item.venue.id}
-                                />
-                              );
-                            }
-                          )
-                        }
+                        {data.response.groups[0].items.map(
+                          (item: IItem, index: any) => {
+                            return (
+                              <Venue
+                                onMouseEnter={onMouseEnterContent}
+                                onMouseLeave={onMouseLeaveContent}
+                                venue={item.venue}
+                                ref={input =>
+                                  (boxRefs[`box-${item.venue.id}`] = input)
+                                }
+                                key={item.venue.id}
+                              />
+                            );
+                          }
+                        )}
                       </div>
                     </div>
                   ) : (
                     <div>
-                      <Warning code={200} message={"No Venues Found"} />
+                        { !isLoading && <Warning code={200} message={"No Venues Found"} />}
                     </div>
-                  )
-                }
+                  )}
                 </div>
               ) : (
                 <div>
-                  <Warning code={200} message={"No Venues Found"} />
+                  { !isLoading && <Warning code={200} message={"No Venues Found"} />}
                 </div>
               )}
             </div>
           )}
         </div>
-        <Loader loader={state.loader} />
+        <Loader loader={isLoading} />
       </div>
     </div>
   );

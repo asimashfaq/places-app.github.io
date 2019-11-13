@@ -1,9 +1,9 @@
 import { mount, route } from 'navi'
 import React ,{ Suspense} from "react";
+import { Router, View } from 'react-navi'
 import { Provider } from "react-redux";
 import { SearchProvider } from "./context/SearchContext";
 import Places from "./modules/places/Places";
-import { Router, View } from 'react-navi'
 
 import { store } from "./store";
 import { Header } from "./views";

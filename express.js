@@ -2,8 +2,17 @@ const express = require("express");
 const app = express();
 const portNumber = 3000;
 const sourceDir = "dist";
-
-app.use(express.static(sourceDir));
+const expressStaticGzip = require("express-static-gzip");
+app.use(
+  "/",
+  expressStaticGzip(sourceDir, {
+    enableBrotli: true,
+    orderPreference: ["br", "gz"],
+    setHeaders: function(res, path) {
+      res.setHeader("Cache-Control", "public, max-age=31536000");
+    }
+  })
+);
 
 app.listen(portNumber, () => {
   console.log(`Express web server started: http://localhost:${portNumber}`);

@@ -19,9 +19,10 @@ export const venuePhotoEpic = (action$: any) =>
         ),
         catchError(error => {
           if (error.needFakeData) {
-            return from(api.getvenuePicResults(action.queryId, true)).map(
-              (response: any) =>
-                venuePhotosSuccess(response.data, action.queryId)
+            return from(
+              api.getvenuePicResults(action.queryId, true)
+            ).map((response: any) =>
+              venuePhotosSuccess(response.data, action.queryId)
             );
           } else {
             return Observable.of(venuePhotosFail(error));

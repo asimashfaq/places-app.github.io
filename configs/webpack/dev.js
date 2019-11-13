@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const commonConfig = require("./common");
 const TSLintPlugin = require("tslint-webpack-plugin");
 const path = require("path");
+const DashboardPlugin = require("webpack-dashboard/plugin");
 module.exports = merge(commonConfig, {
   mode: "development",
   entry: [
@@ -23,6 +24,15 @@ module.exports = merge(commonConfig, {
     new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
     new TSLintPlugin({
       files: ["./src/**/*.ts"]
+    }),
+    new DashboardPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        tslint: {
+          emitErrors: true,
+          failOnHint: true
+        }
+      }
     })
   ]
 });
