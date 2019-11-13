@@ -16,16 +16,19 @@ import { IItem, IPlacesListState } from "./types";
 
 let boxRefs: any = [];
 let refMarkers = [];
-
-const Places: React.FC<{ location: any }> = ({ location }) => {
+interface IProps{
+   fake:string
+   lat:number
+   lng:number
+}
+const Places: React.FC<IProps> = ({fake,lat,lng}:{fake:string,lat:number,lng:number}) => {
   let markers = [];
 
-  const params = parse(location.search);
-  config.UseFakeData((params.fake as string) === "true" || false);
+  config.UseFakeData(fake=== "true" || false);
   const gprops = {
     center: {
-      lat: parseFloat(params.lat as string) || config.LAT,
-      lng: parseFloat(params.lng as string) || config.LNG
+      lat: lat || config.LAT,
+      lng: lng || config.LNG
     },
     zoom: 10
   };
