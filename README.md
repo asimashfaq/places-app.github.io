@@ -1,4 +1,8 @@
 Places App
+
+## live version https://places-app-84554.firebaseapp.com/
+
+
 `git clone https://github.com/asimashfaq/Places-App.git`
 
 `npm run install`
