@@ -8542,10 +8542,15 @@ button {
 
 .hide-all>div:first-child{
   visibility: hidden !important;
+  z-index: 500;
 }
 
 .hide-all>.red-pin{
   visibility: hidden;
+}
+
+.hover-marker:first-child{
+  z-index: 500;
 }
 
 .hover-marker>.red-pin{
@@ -8558,13 +8563,13 @@ button {
 
 .red-pin {
   padding: "4.5px";
-  z-index: 1000;
+  z-index: 1;
   background-image:url(/img/d648d602d20ca421ea193d82e3148250.png)
 }
 
 .blue-pin {
   padding: "4.5px";
-  z-index: 1000;
+  z-index: 1;
   background-image:url(/img/3bdc24b9346fc11316418057d7c6886c.png)
 }
 
