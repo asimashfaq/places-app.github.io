@@ -1,23 +1,23 @@
   
 {
-  "compilerOptions": {
-      "outDir": "./dist/",
-      "sourceMap": true,
-      "noImplicitAny": false,
-      "module": "esnext",
-      "moduleResolution": "node",
-      "esModuleInterop":true,
-      "target": "es5",
-      "noEmit": true,
-      "jsx": "preserve",
-      "lib": ["dom", "es2015", "es2016", "es2017"],
-  },
-  "include": [
-      "./src/**/*", "tests/venue/reducer.test.ts", "tests/venue/action.test.ts", "tests/venue/epic.test.ts", "tests/services/api.test.ts"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-      "reportFiles": [
-          "./src/**/*"
-      ]
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop":true,
+        "target": "es5",
+        "noEmit": true,
+        "jsx": "preserve",
+        "lib": ["es5", "es6", "dom","es2015", "es2016", "es2017"]
+    },
+    "include": [
+        "./src/**/*", "tests/venue/reducer.test.ts", "tests/venue/action.test.ts", "tests/venue/epic.test.ts"
+    ],
+    "awesomeTypescriptLoaderOptions": {
+        "reportFiles": [
+            "./src/**/*"
+        ]
+    }
   }
-}
