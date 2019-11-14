@@ -1,9 +1,9 @@
 import { ofType } from "redux-observable";
-import { from, Observable } from "rxjs";
-import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
+import { from } from "rxjs/internal/Observable/from";
+import { of } from "rxjs/internal/Observable/of";
 import { catchError, map, switchMap } from "rxjs/operators";
 import * as config from "../../config";
 import * as api from "../../services/api";
@@ -28,7 +28,7 @@ export const searchEpic = (action$: any) =>
               api.getSearchResults("", config.LAT, config.LNG, true)
             ).map((response: any) => searchSuccess(response.data));
           } else {
-            return Observable.of(searchFail(error));
+            return of(searchFail(error));
           }
         })
       )

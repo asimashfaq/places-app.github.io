@@ -1,14 +1,15 @@
 import { ofType } from "redux-observable";
-import { from, Observable } from "rxjs";
-import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/switchMap";
+import { from } from "rxjs/internal/Observable/from";
+import { of } from "rxjs/internal/Observable/of";
 import { catchError, map, mergeMap } from "rxjs/operators";
 import * as config from "../../config";
 import * as api from "../../services/api";
 import { venuePhotosFail, venuePhotosSuccess } from "./action";
 import { IVenuePhotoLoadAction } from "./types";
+
 export const venuePhotoEpic = (action$: any) =>
   action$.pipe(
     ofType("VENUE_PHOTOS"),
@@ -25,7 +26,7 @@ export const venuePhotoEpic = (action$: any) =>
               venuePhotosSuccess(response.data, action.queryId)
             );
           } else {
-            return Observable.of(venuePhotosFail(error));
+            return of(venuePhotosFail(error));
           }
         })
       )
